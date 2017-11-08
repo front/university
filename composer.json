@@ -1,0 +1,80 @@
+{
+    "name": "front/university",
+    "description": "The Drupal University distribution",
+    "type": "drupal-profile",
+    "authors": [
+        {
+            "name": "Roberto Ornelas",
+            "email": "rob@front.no"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "license": "GPL-2.0+",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "harvesthq/chosen",
+                "version": "1.6.1",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/harvesthq/chosen/releases/download/v1.6.1/chosen_v1.6.1.zip",
+                    "type": "zip"
+                },
+                "require": {
+                    "composer/installers": "^1.2.0"
+                }
+            }
+        }
+    ],
+    "require": {
+        "drupal/address": "~1.0",
+        "drupal/allowed_formats": "1.x-dev",
+        "drupal/better_exposed_filters": "^3.0",
+        "drupal/chosen": "~2.2",
+        "drupal/embed": "~1.0",
+        "drupal/entity_embed": "~1.0",
+        "drupal/facets": "~1.0",
+        "drupal/link_attributes": "~1.0",
+        "drupal/linkit": "5.0.0-beta6 as 4.0",
+        "drupal/media_entity_document": "^1.1",
+        "drupal/search_api": "~1.4",
+        "harvesthq/chosen": "^1.6"
+    },
+    "extra": {
+        "installer-paths": {
+            "docroot/core": [
+                "type:drupal-core"
+            ],
+            "docroot/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "docroot/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "docroot/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "docroot/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/contrib/{$name}": [
+                "type:drupal-drush"
+            ]
+        },
+        "patches": {
+            "drupal/facets": {
+                "Fix fatal error on first facet being empty": "https://gist.githubusercontent.com/roborn/c97e84bc3511739226678050650b3ac3/raw/0d9713237598eda68e9fc20f0fe270ac7b810401/facets_empty_facet.patch"
+            }
+        }
+    }
+}
