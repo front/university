@@ -4,7 +4,6 @@ description: 'The Drupal 8 based CMS for universities and colleges.'
 core: 8.x
 distribution:
   name: University
-  langcode: nb
 
 base profile:
   name: thunder

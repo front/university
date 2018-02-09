@@ -6,6 +6,10 @@
         {
             "name": "Roberto Ornelas",
             "email": "rob@front.no"
+        },
+        {
+            "name": "Paweł Pregiel",
+            "email": "pawel@pregiel.eu"
         }
     ],
     "minimum-stability": "dev",
