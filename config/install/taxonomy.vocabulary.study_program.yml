@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Study program'
+vid: study_program
+description: 'Study programs fetched from EmWeb'
+hierarchy: 0
+weight: 0

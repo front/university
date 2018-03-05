@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.study_mode
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: taxonomy_term.study_mode
+target_entity_type_id: taxonomy_term
+target_bundle: study_mode
+default_langcode: site_default
+language_alterable: true

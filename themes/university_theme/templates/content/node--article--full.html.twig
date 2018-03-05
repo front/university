@@ -1,0 +1,62 @@
+{#
+/**
+ * @file
+ * Theme override to display a full article node.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+<article{{ attributes.addClass('content-wrapper') }}>
+
+  <div class="row row-space-medium">
+    <div class="inner-row">
+      <h1 class="page-title">{{ label }}</h1>
+    </div>
+  </div>
+
+  {{ title_suffix.contextual_links }}
+
+  {% if content.field_hero_media %}
+    <div class="row widget-gallery carousel-one-autoplay">
+      <div class="inner-row">
+        <div class="wg-body">
+          {{ content.field_hero_media }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row row-space-large">
+    <div class="inner-row">
+      <div class="l-two-one">
+        <div class="l-item-first">
+
+          {% if display_submitted %}
+            <div class="meta">
+              <p><span class="author">{{ 'Text'|t }}: {{ author_name }}</span>
+                {% if photo_author_name %}, <span class="photo">{{ 'Photo'|t }}: {{ photo_author_name }}</span>{% endif %}
+              </p>
+              <p>
+                <time datetime="{{ created_datetime }}">{{ created_time }}</time>
+                {% if updated_time %}- {{ 'Updated'|t }}
+                <time datetime="{{ updated_datetime }}">{{ updated_time }}</time>{% endif %}
+              </p>
+              {{ metadata }}
+            </div>
+          {% endif %}
+
+          <div{{ content_attributes.addClass('copy') }}>
+            {{ content|without('field_hero_media', 'field_tags', 'shariff_field') }}
+          </div>
+
+          {{ content.field_tags }}
+        </div>
+
+        <div class="l-item-second">
+          {{ content.shariff_field }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</article>

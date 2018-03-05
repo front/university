@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: about
+label: About
+description: 'Menu on the footer'
+locked: false

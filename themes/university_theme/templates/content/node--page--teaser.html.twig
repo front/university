@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * Theme override to display a node.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+{%
+  set classes = ['content-teaser', 'article']
+%}
+<article{{ attributes.addClass(classes) }}>
+  {{ title_suffix }}
+
+  <a href="{{ url }}" rel="bookmark" class="link-block">
+    {% if content.field_teaser_media %}
+      <div class="image">{{ content.field_teaser_media }}</div>
+    {% endif %}
+
+    <h1{{ title_attributes.addClass('title') }}>{{ label }}</h1>
+
+    {% if content.field_teaser_text %}
+      <div class="desc">
+        {{ content.field_teaser_text }}
+      </div>
+    {% endif %}
+  </a>
+</article>

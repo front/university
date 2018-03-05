@@ -1,0 +1,66 @@
+{#
+/**
+ * @file
+ * Theme override to display a node.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+<article{{ attributes.addClass('content-wrapper') }}>
+  <div class="row row-space-medium">
+    <div class="inner-row">
+      <h1{{ title_attributes.addClass('page-title') }}>{{ label }}</h1>
+      {{ title_suffix }}
+
+      {{ content.field_hero_media }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="inner-row">
+      <div class="l-two-one">
+        <div class="l-item-first">
+          <div class="l-push-aside">
+            <div class="content-teaser event large">
+              {% if event.datetime %}
+                <a href="{{ event.cta.url ? event.cta.url : url }}"
+                   class="link-block">
+                  <time class="date-block" datetime="{{ event.datetime }}">
+                    <span class="day">{{ event.day }}</span>
+                    <span class="month">{{ event.month }}</span>
+                  </time>
+                </a>
+                <time class="time icon-watch"
+                      datetime="{{ event.datetime }}">{{ event.hour }}</time>
+              {% endif %}
+
+              {% if content.location_url %}
+                {{ content.location_url }}
+              {% elseif content.location %}
+                <span
+                  class="location icon-map-marker">{{ content.location }}</span>
+              {% endif %}
+            </div>
+
+            <!--
+            <a href="#" class="add-to-calendar">{{ 'Add to calendar'|t }}</a>
+            -->
+
+            {% if event.cta %}
+              <a href="{{ event.cta.url }}"
+                 class="btn block cta">{{ event.cta.label }}</a>
+            {% endif %}
+          </div>
+
+          <div class="copy">
+            {{ content.field_description }}
+          </div>
+
+          <div class="list-social">
+              {{ content.shariff_field }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

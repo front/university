@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: apply-information
+label: 'Apply Information'
+description: 'Apply Information menu on the footer'
+locked: false

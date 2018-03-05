@@ -1,0 +1,18 @@
+{#
+/**
+ * @file
+ * Theme implementation to display a single link.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes }}>
+  <a href="{{ content.field_link[0]['#url'] }}">
+    {{ content.field_link[0]['#title'] }}
+    {% if links_variant == 'box' and content.field_excerpt %}
+      <span>{{ content.field_excerpt }}</span>
+    {% endif %}
+  </a>
+</div>

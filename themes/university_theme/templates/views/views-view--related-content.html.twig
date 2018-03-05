@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Theme override for main view template.
+ *
+ * @see template_preprocess_views_view()
+ */
+#}
+<div class="wg-body">
+  {% for insight_video_row in insight_video_rows %}
+    {% include '@university_theme/parts/insight-video.html.twig' %}
+  {% endfor %}
+  {{ rows }}
+</div>
+
+{% if footer %}
+  <div class="wg-footer">
+    {{ footer }}
+  </div>
+{% endif %}

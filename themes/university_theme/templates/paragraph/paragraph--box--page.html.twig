@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a paragraph.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'row',
+    'factbox',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class
+  ]
+%}
+<section{{ attributes.addClass(classes) }}>
+  <div class="inner-row">
+    <div class="wg-body">
+      {{ content }}
+    </div>
+  </div>
+</section>

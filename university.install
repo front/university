@@ -13,4 +13,23 @@
  */
 function university_install() {
   // Add custom code in here to make nodes, terms, etc.
+  drupal_get_messages();
+
+  // Set frontend theme.
+  \Drupal::configFactory()
+    ->getEditable('system.theme')
+    ->set('admin', 'university_admin')
+    ->save(TRUE);
+
+  // Set admin theme.
+  \Drupal::configFactory()
+    ->getEditable('system.theme')
+    ->set('default', 'university_theme')
+    ->save(TRUE);
+
+  // Enable the admin theme.
+  \Drupal::configFactory()
+    ->getEditable('node.settings')
+    ->set('use_admin_theme', TRUE)
+    ->save(TRUE);
 }

@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Theme override to display a node.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+{%
+set classes = ['content-teaser', 'event']
+%}
+<article{{ attributes.addClass(classes) }}>
+  {% if event.datetime %}
+    <time class="date-block" datetime="{{ event.datetime }}">
+      <span class="day">{{ event.day }}</span>
+      <span class="month">{{ event.month }}</span>
+    </time>
+  {% endif %}
+
+  <a href="{{ url }}" rel="bookmark" class="link-block">
+    <h1{{ title_attributes.addClass('title') }}>{{ label }}</h1>
+    {{ title_suffix }}
+  </a>
+
+  {% if event.datetime %}
+    <time class="time icon-watch"
+          datetime="{{ event.datetime }}">{{ event.hour }}</time>
+  {% endif %}
+
+  {% if content.location_url %}
+    {{ content.location_url }}
+  {% elseif content.location %}
+    <span class="location icon-map-marker">{{ content.location }}</span>
+  {% endif %}
+</article>

@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Study subject'
+vid: study_subject
+description: 'Study subject area fetched from EmWeb'
+hierarchy: 0
+weight: 0

@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: hero_media
+label: 'Hero Media'
+effects:
+  5feb257d-161a-47a2-a008-97dfa9a2bff0:
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 1100
+      height: 450

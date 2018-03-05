@@ -1,0 +1,1202 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the university_theme theme.
+ */
+
+use Drupal\block\Entity\Block;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
+use Drupal\file\Entity\File;
+use Drupal\image\Entity\ImageStyle;
+use Drupal\media_entity\Entity\Media;
+use Drupal\node\Entity\Node;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\views\Views;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function university_theme_preprocess_html(array &$variables) {
+  if (\Drupal::service('path.matcher')->isFrontPage()) {
+    $variables['attributes']['class'][] = 'template-front-page';
+  }
+  elseif (!empty($variables['node_type'])) {
+    $variables['attributes']['class'][] = 'template-' . $variables['node_type'];
+  }
+
+  // Add class to user page.
+  if (isset($variables['root_path'])) {
+    if ($variables['root_path'] == 'user') {
+      $variables['attributes']['class'][] = 'template-employee';
+    }
+    elseif ($variables['root_path'] == 'studium' || $variables['root_path'] == 'tilsette') {
+      $variables['attributes']['class'][] = 'template-study-list';
+    }
+    elseif ($variables['root_path'] == 'sok') {
+      $variables['attributes']['class'][] = 'template-search';
+    }
+  }
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function university_theme_page_attachments_alter(array &$page) {
+  // Tell IE to use latest rendering engine (not to use compatibility mode).
+  /*$ie_edge = [
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => [
+    'http-equiv' => 'X-UA-Compatible',
+    'content' => 'IE=edge',
+    ],
+  ];
+  $page['#attached']['html_head'][] = [$ie_edge, 'ie_edge'];*/
+}
+
+/**
+ * Implements hook_preprocess_page() for page.html.twig.
+ */
+function university_theme_preprocess_page(array &$variables) {
+}
+
+/**
+ * Implements hook_theme_suggestions_page_alter().
+ */
+function university_theme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function university_theme_preprocess_region(array &$variables) {
+}
+
+/**
+ * Implements hook_theme_suggestions_region_alter().
+ */
+function university_theme_theme_suggestions_region_alter(array &$suggestions, array $variables) {
+  $nowrap_regions = [
+    'bottom',
+    'breadcrumb',
+    'content',
+    'featured_top',
+    'footer',
+    'header',
+    'highlighted',
+    'primary_menu',
+    'secondary_menu',
+    'sidebar_first',
+    'sidebar_second',
+  ];
+  if (in_array($variables['elements']['#region'], $nowrap_regions)) {
+    $suggestions[] = 'region__nowrap';
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_container_alter().
+ */
+function university_theme_theme_suggestions_container_alter(array &$suggestions, array $variables) {
+  if (isset($variables['element']['#view'])) {
+    $suggestions[] = 'container__' . $variables['element']['#view']->id();
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_node_alter().
+ */
+function university_theme_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+}
+
+/**
+ * Implements hook_theme_suggestions_user_alter().
+ */
+function university_theme_theme_suggestions_user_alter(array &$suggestions, array $variables) {
+  $suggestions[] = 'user__' . $variables['elements']['#view_mode'];
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for Block document templates.
+ */
+function university_theme_preprocess_block(array &$variables) {
+  static $pos = 1;
+
+  if ($block = Block::load($variables['elements']['#id'])) {
+    $region = $block->getRegion();
+
+    if ($region == 'footer') {
+      $variables['content']['#attributes']['class'][] = 'list-icons';
+      $variables['title_attributes']['class'][]       = 'nav-title';
+
+      if ($pos % 3 != 0) {
+        $variables['title_attributes']['class'][] = 'collapsable';
+      }
+      $pos++;
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_block_alter().
+ */
+function university_theme_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  $block = Block::load($variables['elements']['#id']);
+  if ($block) {
+    $suggestions[] = 'block__' . $block->getRegion();
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_paragraph_alter().
+ */
+function university_theme_theme_suggestions_paragraph_alter(array &$suggestions, array $variables) {
+  $bundle = $variables['elements']['#paragraph']->bundle();
+  $parent = $variables['elements']['#paragraph']->getParentEntity();
+
+  if (!$parent) {
+    $ref_parent = $variables['elements']['#paragraph']->_referringItem->getParent();
+    if ($ref_parent && $ref_parent_parent = $ref_parent->getParent()) {
+      $parent = $ref_parent_parent->getValue();
+    }
+  }
+
+  if ($parent instanceof Node || $parent instanceof Paragraph) {
+    $parent_bundle = $parent->bundle();
+  }
+
+  // Fallback parent bundle.
+  if (empty($parent_bundle)) {
+    $parent_bundle = 'paragraph';
+  }
+
+  $nowrap_paragraphs = [
+    'gallery',
+    'html',
+    'media',
+    'text',
+    'twitter',
+  ];
+
+  $suggestions[] = 'paragraph__' . $bundle . '__' . $parent_bundle;
+
+  if (in_array($bundle, $nowrap_paragraphs)) {
+    if ($parent_bundle == 'page') {
+      if ($bundle == 'media') {
+        $suggestions[] = 'paragraph__fullwidth__media';
+      }
+      else {
+        $suggestions[] = 'paragraph__fullwidth';
+      }
+    }
+    else {
+      $suggestions[] = 'paragraph__nowrap';
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_field_alter().
+ */
+function university_theme_theme_suggestions_field_alter(array &$suggestions, array $variables) {
+  $nowrap_fields = [
+    'field_author',
+    'field_block',
+    'field_department',
+    'field_hero_media',
+    'field_paragraphs',
+    'field_media',
+    'field_url',
+    'field_links',
+    'field_items',
+    'field_study_admission_reqs',
+    'field_study_application_code',
+    'field_study_application_date',
+    'field_study_contact',
+    'field_study_credits',
+    'field_study_duration',
+    'field_study_education_type',
+    'field_study_internationalization',
+    'field_study_intro',
+    'field_study_start_semester',
+    'field_study_teaching_methods',
+    'field_study_text',
+    'field_study_work_further_studies',
+    'field_subtitle',
+  ];
+
+  if (in_array($variables['element']['#field_name'], $nowrap_fields)) {
+    $suggestions[] = 'field__nowrap';
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_field_alter().
+ */
+function university_theme_theme_suggestions_fieldset_alter(array &$suggestions, array $variables) {
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function university_theme_preprocess_node(array &$variables) {
+  // Get node author real name.
+  $author = $variables['node']->getOwner();
+  if ($author->id() == 0) {
+    $variables['author_name'] = t('Guest author');
+  }
+  else {
+    $fields     = $author->getFields();
+    $first_name = $fields['field_first_name']->getString();
+    $last_name  = $fields['field_last_name']->getString();
+
+    if ($first_name || $last_name) {
+      $author_name = $first_name . ' ' . $last_name;
+
+      $field_hidden_profile = $author->get('field_hidden_profile')->getValue();
+      if (!empty($field_hidden_profile[0])) {
+        $is_hidden_profile = $field_hidden_profile[0]['value'];
+      }
+      else {
+        $is_hidden_profile = FALSE;
+      }
+      if ($author->isActive() && !$is_hidden_profile) {
+        $variables['author_name'] = Link::createFromRoute($author_name, 'entity.user.canonical', ['user' => $author->id()]);
+      }
+      else {
+        $variables['author_name'] = ['#plain_text' => $author_name];
+      }
+    }
+  }
+
+  // Get copyright and/or authors from featured media.
+  if (!empty($variables['elements']['field_hero_media'][0]['#media'])) {
+    $copyright  = [];
+    $hero_media = $variables['elements']['field_hero_media'][0]['#media'];
+
+    if ($hero_media->bundle() == 'gallery') {
+      $media_images = $hero_media->get('field_media_images');
+      $media_ids    = array_column($media_images->getValue(), 'target_id');
+      $images       = Media::loadMultiple($media_ids);
+
+      foreach ($images as $image) {
+        if ($txt = $image->get('field_copyright')->getString()) {
+          $copyright[] = $txt;
+        }
+      }
+    }
+    elseif ($txt = $hero_media->get('field_copyright')->getString()) {
+      $copyright[] = $txt;
+    }
+
+    if (!empty($copyright)) {
+      $variables['photo_author_name'] = implode(', ', $copyright);
+    }
+  }
+
+  // Dates.
+  $created_time                  = $variables['node']->getCreatedTime();
+  $date_formatter                = \Drupal::service('date.formatter');
+  $variables['created_time']     = $date_formatter->format($created_time, 'custom', 'd. F Y');
+  $variables['created_datetime'] = $date_formatter->format($created_time, 'html_datetime');
+
+  $updated_time = $variables['node']->get('changed')->value;
+  if ($updated_time && $updated_time != $created_time) {
+    $variables['updated_time']     = \Drupal::service('date.formatter')
+                                            ->format($updated_time, 'custom', 'd.F Y');
+    $variables['updated_datetime'] = \Drupal::service('date.formatter')
+                                            ->format($updated_time, 'html_datetime');
+  }
+
+  // Event.
+  if ($variables['node']->bundle() == 'event') {
+    // Dates.
+    if (!empty($variables['content']['field_date_from']['#items'])) {
+      $from_timestamp = strtotime($variables['content']['field_date_from'][0]['#attributes']['datetime']);
+
+      $from_day   = $date_formatter->format($from_timestamp, 'custom', 'j');
+      $from_month = $date_formatter->format($from_timestamp, 'custom', 'M');
+      $from_hour  = $date_formatter->format($from_timestamp, 'custom', 'H.i');
+
+      $variables['event']['datetime'] = $date_formatter->format($from_timestamp, 'html_datetime');
+      $variables['event']['day']      = $from_day;
+      $variables['event']['month']    = $from_month;
+      $variables['event']['hour']     = $from_hour;
+
+      if (!empty($variables['content']['field_date_to']['#items'])) {
+        $to_timestamp = strtotime($variables['content']['field_date_to'][0]['#attributes']['datetime']);
+
+        $to_day   = $date_formatter->format($to_timestamp, 'custom', 'j');
+        $to_month = $date_formatter->format($to_timestamp, 'custom', 'M');
+        $to_hour  = $date_formatter->format($to_timestamp, 'custom', 'H.i');
+
+        if ($from_day != $to_day) {
+          $variables['event']['day'] .= '-' . $to_day;
+        }
+        if ($from_hour != $to_hour) {
+          $variables['event']['hour'] .= ' - ' . $to_hour;
+        }
+        if ($from_month != $to_month) {
+          $variables['event']['month'] .= '/' . $to_month;
+        }
+      }
+    }
+
+    // Location.
+    if (!empty($variables['content']['field_location']['#items'])) {
+      $variables['content']['location'] = $variables['content']['field_location']['#items']->getString();
+      if (!empty($variables['content']['field_location_url']['#items'])) {
+        $url          = $variables['content']['field_location_url'][0]['#url'];
+        $link_options = [
+          'attributes' => [
+            'class'  => [
+              'location',
+              'icon-map-marker',
+            ],
+            'target' => ['_blank'],
+          ],
+        ];
+        $url->setOptions($link_options);
+
+        $variables['content']['location_url'] = Link::fromTextAndUrl($variables['content']['location'], $url);
+      }
+    }
+
+    // CTA.
+    if (!empty($variables['content']['field_link']['#items'])) {
+      $link                               = $variables['content']['field_link']['#items']->get(0)
+                                                                                         ->getValue();
+      $variables['event']['cta']['label'] = empty($link['title']) ? t('Sign up!') : $link['title'];
+      $variables['event']['cta']['url']   = $variables['content']['field_link'][0]['#url'];
+    }
+  }
+  elseif ($variables['node']->bundle() == 'study') {
+    if ($variables['view_mode'] == 'full') {
+      _university_theme_add_study_information($variables);
+      _university_theme_add_study_plan($variables);
+      _university_theme_add_study_insights($variables);
+      _university_theme_add_study_cta($variables);
+    }
+    else {
+      // TODO: other view modes needs processing?
+    }
+  }
+}
+
+/**
+ * Add study information nodes to study program content type.
+ *
+ * @param array $variables
+ */
+function _university_theme_add_study_information(array &$variables) {
+  if (!empty($variables['elements']['field_study_program']['#items'])) {
+    $study_program = $variables['elements']['field_study_program']['#items']->getString();
+    $result        = \Drupal::entityQuery('node')
+                            ->condition('status', 1)
+                            ->condition('type', 'study_information')
+                            ->condition('field_study_program.entity.tid', $study_program)
+                            ->sort('created', 'DESC')
+                            ->range(0, 1)
+                            ->execute();
+
+    if ($result) {
+      $node      = Node::load(reset($result));
+      $node_view = \Drupal::entityTypeManager()
+                          ->getViewBuilder('node')
+                          ->view($node, 'full');
+
+      $variables['study_information'] = $node_view['#node']->getFields();
+    }
+  }
+}
+
+/**
+ * Add study plan to study program content type.
+ *
+ * @param array $variables
+ */
+function _university_theme_add_study_plan(array &$variables) {
+  // Get study plan from EmWeb.
+  $program            = '';
+  $elements           = $variables['elements'];
+  $emweb_installation = 'https://ny.emweb.no';
+
+  if (!empty($elements['field_study_program']['#items'])) {
+    $program = $elements['field_study_program'][0]['#title'];
+  }
+
+  $client = new Client(['base_uri' => $emweb_installation]);
+  try {
+    $query    = ['filter[studyProgram.shortName]' => $program];
+    $response = $client->request('GET', '/[INSTALLATION_PATH]/nn/api/v1.0/pd', [
+      'query' => $query,
+    ]);
+  } catch (RequestException $e) {
+  }
+
+  if (isset($response) && $response->getStatusCode() == 200) {
+    $response_body = json_decode($response->getBody(), TRUE);
+    if (!empty($response_body['data'])) {
+      $plans = [];
+      foreach ($response_body['data'] as $plan) {
+        if ($plan['attributes']['gateflow_done'] == TRUE
+            && !empty($plan['attributes']['year'])
+        ) {
+          $plans[$plan['attributes']['year']['label']] = $plan;
+        }
+      }
+
+      if (!empty($plans)) {
+        sort($plans);
+        $plan_id  = end($plans)['id'];
+        $plan_res = $client->request('GET', '/[INSTALLATION_PATH]/nn/rendered/' . $plan_id);
+
+        if ($plan_res->getStatusCode() == 200) {
+          $path                    = \Drupal::service('path.current')
+                                            ->getPath();
+          $study_plan              = json_decode($plan_res->getBody());
+          $study_plan              = str_replace('="studieplan', '="' . $path, $study_plan);
+          $variables['study_plan'] = ['#markup' => $study_plan];
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Add study insights to study program content type.
+ *
+ * @param array $variables
+ */
+function _university_theme_add_study_insights(array &$variables) {
+  $view = Views::getView('related_content');
+
+  if ($insights = $view->render('insights')) {
+    $variables['study_insights'] = $insights;
+  }
+}
+
+/**
+ * Add study CTA button or text to study program content type.
+ *
+ * @param array $variables
+ */
+function _university_theme_add_study_cta(array &$variables) {
+  if (!empty($variables['elements']['field_study_admission_type']['#items'])) {
+    $study_cta      = [];
+    $tid            = $variables['elements']['field_study_admission_type']['#items']->getString();
+    $admission_type = Term::load($tid);
+
+    if ($admission_type->hasField('field_study_cta')) {
+      $study_cta = $admission_type->get('field_study_cta');
+    }
+
+    if (!empty($study_cta[0])) {
+      $text = !empty($study_cta[0]->title) ? $study_cta[0]->title : t('Search for a study place!');
+      if ($study_cta[0]->uri == '#') {
+        $variables['study_cta'] = Markup::create('<span class="btn">' . $text . '</span>');
+      }
+      else {
+        $options = [
+          'attributes' => [
+            'target' => '_blank',
+            'rel'    => 'nofollow',
+            'class'  => ['btn'],
+          ],
+        ];
+
+        $url                    = Url::fromUri($study_cta[0]->uri, $options);
+        $variables['study_cta'] = Link::fromTextAndUrl($text, $url);
+      }
+    }
+    elseif ($admission_type->getName() == 'Stengt for søking') {
+      $text                   = t('Closed for application');
+      $variables['study_cta'] = Markup::create('<span class="btn">' . $text . '</span>');
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_views_view_alter().
+ */
+function university_theme_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+  $suggestions[] = 'views_view__' . $variables['view']->id();
+}
+
+/**
+ * Implements hook_theme_suggestions_views_view_unformatted_alter().
+ */
+function university_theme_theme_suggestions_views_view_unformatted_alter(array &$suggestions, array $variables) {
+  if ($variables['view']->id() == 'related_content') {
+    $suggestions[] = 'views_view__nowrap';
+  }
+}
+
+/**
+ * Implements hook_preprocess_form().
+ */
+function university_theme_preprocess_form(array &$variables) {
+  if ($variables['element']['#id'] == 'views-exposed-form-study-page') {
+    $variables['attributes']['class'][] = 'filter-study';
+    $variables['attributes']['class'][] = 'grid-three';
+  }
+  elseif ($variables['element']['#id'] == 'views-exposed-form-search-api-sok') {
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ */
+function university_theme_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form['#id'] == 'views-exposed-form-search-api-sok') {
+    $form['keys']['#placeholder']                      = t('Search on university');
+    $form['keys']['#prefix']                           = '<div class="input-button-group input-underline">';
+    $form['actions']['#suffix']                        = '</div>';
+    $form['actions']['submit']['#value']               = '';
+    $form['actions']['submit']['#attributes']['class'] = [
+      'btn-search',
+      'input-btn-search',
+    ];
+  }
+  elseif ($form['#id'] == 'views-exposed-form-employees-page') {
+    $form['name']['#prefix'] = '<div class="input-button-group">';
+    $form['name']['#suffix'] = '</div>';
+  }
+}
+
+/**
+ * Prepares variables for form element templates.
+ *
+ * @param array $variables
+ */
+function university_theme_preprocess_form_element(&$variables) {
+  if ($variables['type'] == 'checkbox') {
+    $variables['attributes']['class'][] = 'checkbox-group';
+  }
+}
+
+/**
+ * Implements hook_preprocess_select().
+ */
+function university_theme_preprocess_select(array &$variables) {
+  //$variables['attributes']['class'][] = 'select-chosen';
+}
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function university_theme_preprocess_field(array &$variables) {
+  if ($variables['field_name'] == 'field_tags') {
+    foreach ($variables['items'] as $key => $item) {
+      $variables['items'][$key]['content']['#attributes']['class'] = 'tag-link';
+    }
+  }
+  elseif ($variables['field_name'] == 'field_column_items') {
+    foreach ($variables['items'] as $key => $item) {
+      if ($item['content']['#paragraph']->bundle() == 'text') {
+        $variables['items'][$key]['content']['#attributes']['class'] = 'copy';
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_paragraph().
+ */
+function university_theme_preprocess_paragraph(array &$variables) {
+  $bundle  = $variables['paragraph']->bundle();
+  $content = &$variables['content'];
+
+  if ($bundle == 'link') {
+    $parent = $variables['paragraph']->getParentEntity();
+    if ($parent && $parent->bundle() == 'links') {
+      $parent_fields = $parent->getFields();
+      if (!empty($parent_fields['field_links_variant'])) {
+        $variables['links_variant'] = $parent_fields['field_links_variant']->getString();
+      }
+      else {
+        $variables['links_variant'] = 'regular';
+      }
+
+      $variables['attributes']['class'][] = 'grid-item';
+    }
+    elseif (!empty($content['field_links_variant']['#items'])) {
+      $variables['links_variant'] = $content['field_links_variant']['#items']->getString();
+      switch ($variables['links_variant']) {
+        case 'button':
+          $variables['attributes']['class'][] = 'widget-btn-link';
+          break;
+
+        case 'box':
+          $variables['attributes']['class'][] = 'widget-box-link';
+          break;
+
+        default:
+          $variables['attributes']['class'][] = 'widget-link';
+          break;
+      }
+    }
+    else {
+      $variables['links_variant']         = 'regular';
+      $variables['attributes']['class'][] = 'widget-link';
+    }
+  }
+  elseif ($bundle == 'links') {
+    if (!empty($content['field_links_variant']['#items'])) {
+      switch ($content['field_links_variant']['#items']->getString()) {
+        case 'button':
+          $variables['attributes']['class'][] = 'widget-btn-link';
+          break;
+
+        case 'box':
+          $variables['attributes']['class'][] = 'widget-box-link';
+          break;
+
+        default:
+          $variables['attributes']['class'][] = 'widget-link';
+          break;
+      }
+
+      hide($content['field_links_variant']);
+    }
+    else {
+      $variables['attributes']['class'][] = 'widget-link';
+    }
+  }
+  elseif ($bundle == 'banner') {
+    if (!empty($content['field_banner_variant']['#items'])) {
+      $variant = $content['field_banner_variant']['#items']->getString();
+    }
+    if (empty($variant)) {
+      $variant = 'banner_media';
+    }
+
+    if (!empty($content['field_banner_height']['#items'])) {
+      $variables['attributes']['class'][] = $content['field_banner_height']['#items']->getString();
+    }
+
+    if (!empty($content['field_banner_overlay']['#items'])) {
+      $overlay = (int) $content['field_banner_overlay']['#items']->getString();
+
+      if ($overlay === 1) {
+        $variables['attributes']['class'][] = 'overlay';
+      }
+    }
+
+    if (!empty($content['field_media']['#items'])) {
+      $media_fields = $content['field_media'][0]['#media']->getFields();
+      $fid          = $media_fields['field_image']->getValue()[0]['target_id'];
+
+      $image_style = ImageStyle::load($variant);
+      if ($image_style && ($file = File::load($fid))) {
+        $image_uri                 = $image_style->buildUrl($file->getFileUri());
+        $variables['banner_image'] = Url::fromUri(file_create_url($image_uri));
+      }
+    }
+
+    switch ($variant) {
+      case 'banner_media_wide':
+        $variables['attributes']['class'][] = 'full-width';
+        break;
+
+      default:
+        $variables['attributes']['class'][] = 'row-space-medium';
+        break;
+    }
+  }
+  elseif ($bundle == 'dynamic_list') {
+    $variables['content']['view'] = _university_theme_get_dynamic_list($content);
+
+    if (!empty($content['field_content_type']['#items'])) {
+      $variables['attributes']['class'][] = $content['field_content_type']['#items']->getString();
+    }
+  }
+
+  // Add paragraph attributes.
+  if (!empty($content['field_row_width']['#items'])) {
+    $variables['attributes']['class'][] = 'row-' . $content['field_row_width']['#items']->getString();
+    hide($content['field_row_width']);
+  }
+  if (!empty($content['field_row_columns']['#items'])) {
+    $type                               = ($bundle == 'list' || $bundle == 'dynamic_list') ? 'carousel' : 'grid';
+    $variables['attributes']['class'][] = $type . '-' . $content['field_row_columns']['#items']->getString();
+    hide($content['field_row_columns']);
+  }
+  if (!empty($content['field_row_space']['#items'])) {
+    $variables['attributes']['class'][] = 'row-' . $content['field_row_space']['#items']->getString();
+    hide($content['field_row_space']);
+  }
+  if (!empty($content['field_row_bg']['#items'])) {
+    $variables['attributes']['class'][] = 'bg-' . $content['field_row_bg']['#items']->getString();
+    hide($content['field_row_bg']);
+  }
+}
+
+/**
+ * Implements hook_preprocess_details().
+ */
+function university_theme_preprocess_details(array &$variables) {
+  /*$variables['attributes']['class'][] = 'details';
+  $variables['summary_attributes']['class'] = 'summary';*/
+}
+
+/**
+ * Implements hook_theme_suggestions_details_alter().
+ */
+function university_theme_theme_suggestions_details_alter(array &$suggestions, array $variables) {
+}
+
+/**
+ * Implements hook_preprocess_menu_local_task().
+ */
+function university_theme_preprocess_menu_local_task(array &$variables) {
+  //$variables['element']['#link']['url']->setOption('attributes', ['class'=>'rounded']);
+}
+
+/**
+ * Implements hook_preprocess_menu().
+ */
+function university_theme_preprocess_menu(array &$variables) {
+  if (
+    $variables['menu_name'] == 'main'
+    || $variables['menu_name'] == 'main-english'
+    || $variables['menu_name'] == 'top'
+    || $variables['menu_name'] == 'top-english') {
+    foreach ($variables['items'] as $key => $item) {
+      $variables['items'][$key]['attributes']->addClass('nav-item');
+    }
+
+    if ($variables['menu_name'] == 'main' || $variables['menu_name'] == 'main-english') {
+      $variables['attributes']['class'][] = 'nav-primary';
+    }
+    elseif ($variables['menu_name'] == 'top' || $variables['menu_name'] == 'top-english') {
+      $variables['attributes']['class'][] = 'nav-secondary';
+    }
+  }
+  elseif ($variables['menu_name'] == 'social-links') {
+    $variables['attributes']['class'][] = 'social-links';
+
+    foreach ($variables['items'] as $key => $item) {
+      $variables['items'][$key]['attributes']->addClass('social-link');
+
+      $attributes = $item['url']->getOption('attributes');
+      if (!empty($attributes['class'])) {
+        $variables['items'][$key]['attributes']->addClass($attributes['class']);
+      }
+    }
+  }
+  elseif ($variables['menu_name'] == 'admission-information' || $variables['menu_name'] == 'professional-information') {
+    $variables['attributes']['class'][] = 'list-icons';
+  }
+  // Add translation links.
+  if ($variables['menu_name'] == 'top' || $variables['menu_name'] == 'top-english') {
+    _university_theme_add_language_links($variables);
+  }
+}
+
+/**
+ * Add language switcher links
+ *
+ * @param array $variables
+ */
+function _university_theme_add_language_links(array &$variables) {
+  $route_name   = \Drupal::service('path.matcher')
+                         ->isFrontPage() ? '<front>' : '<current>';
+  $switch_links = \Drupal::languageManager()
+                         ->getLanguageSwitchLinks('language_interface', Url::fromRoute($route_name));
+
+  if (!empty($switch_links->links)) {
+    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    foreach ($switch_links->links as $lang => $link) {
+      if ($lang != $langcode) {
+        $url = $link['url'];
+        $url->setOption('language', $link['language']);
+        $attributes = new Attribute(['class' => ['nav-item']]);
+
+        $variables['items'][$lang] = [
+          'url'        => $url,
+          'title'      => $link['title'],
+          'attributes' => $attributes,
+        ];
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_breadcrumb().
+ */
+function university_theme_preprocess_breadcrumb(&$variables) {
+  if ($variables['breadcrumb'] && !\Drupal::service('path.matcher')
+                                          ->isFrontPage()) {
+    // Add current page title to breadcrumb.
+    $request     = \Drupal::request();
+    $route_match = \Drupal::routeMatch();
+    $route_name  = $route_match->getRouteName();
+    $node_url    = NULL;
+
+    if ($route_name == 'entity.user.canonical') {
+      $params = $route_match->getParameters();
+      if ($params->has('user')) {
+        $user_account = $params->get('user');
+
+        if ($department = $user_account->get('field_department')) {
+          $term_view = $department->view();
+
+          if (isset($term_view[0]['#options']['entity'])) {
+            $term_id        = $term_view[0]['#options']['entity']->id();
+            $department     = '/tilsette?department[' . $term_id . ']=' . $term_id;
+            $department_url = Url::fromUserInput($department);
+
+            $variables['breadcrumb'][] = Link::fromTextAndUrl($term_view[0]['#title'], $department_url);
+          }
+        }
+
+        $user_fields = [];
+        if ($first_name = $user_account->get('field_first_name')) {
+          $user_fields[] = $first_name->getString();
+        }
+        if ($last_name = $user_account->get('field_last_name')) {
+          $user_fields[] = $last_name->getString();
+        }
+
+        if (!empty($user_fields)) {
+          $title = implode(' ', $user_fields);
+        }
+        else {
+          $title = $user_account->get('name')->getString();
+        }
+      }
+    }
+    elseif ($route_name == 'entity.node.canonical') {
+      $node = $route_match->getParameter('node');
+      if ($node instanceof \Drupal\node\NodeInterface) {
+        $node_url = $node->toUrl()->toString();
+      }
+    }
+
+    // Remove 'Node' and 'Front' link.
+    // todo: provide proper breadcrumb through custom module.
+    foreach ($variables['breadcrumb'] as $key => $crumb) {
+      if (is_array($crumb)
+          && isset($crumb['text'])
+          && ($crumb['text'] == 'Node' || $crumb['text'] == 'Front')) {
+        unset($variables['breadcrumb'][$key]);
+      }
+    }
+
+    // Fix for missing Studietilbod breadcrumb
+    // todo: provide proper breadcrumb through custom module
+    $studietilbod_subs = [
+      '/vidare',
+      '/phd',
+      '/opptak',
+      '/utveksling',
+    ];
+
+    $is_studietilbod_sub         = (in_array($node_url, $studietilbod_subs, TRUE)) ? TRUE : FALSE;
+    $is_study_view               = ($route_name == 'view.study.page') ? TRUE : FALSE;
+    $is_emweb_study_courses_view = ($route_name == 'emweb_catalog.study_courses') ? TRUE : FALSE;
+    $is_emweb_study_plans_view   = ($route_name == 'emweb_catalog.study_plans') ? TRUE : FALSE;
+
+    if ($is_studietilbod_sub || $is_study_view || $is_emweb_study_courses_view || $is_emweb_study_plans_view) {
+      $studietilbod_bc = [
+        'text' => 'Studietilbod',
+        'url'  => '/studietilbod',
+      ];
+      array_splice($variables['breadcrumb'], 1, 0, [$studietilbod_bc]);
+    }
+
+    // Fix for the last breadcrumb title on study view
+    // todo: provide proper breadcrumb through custom module
+    if ($route_name == 'view.study.page') {
+      $title = 'Studium';
+    }
+
+    if (empty($title)) {
+      $title = \Drupal::service('title_resolver')
+                      ->getTitle($request, $route_match->getRouteObject());
+    }
+
+    $variables['breadcrumb'][] = ['text' => $title];
+
+    // Handle cache. Invalidate by url.
+    $variables['#cache']['contexts'][] = 'url';
+  }
+  else {
+    $variables['breadcrumb'] = '';
+  }
+}
+
+/**
+ * Implements hook_preprocess_media().
+ */
+function university_theme_preprocess_media(&$variables) {
+  if (!empty($variables['elements']['field_copyright'][0])
+      || !empty($variables['elements']['field_description'][0])
+  ) {
+    $variables['caption']               = TRUE;
+    $variables['attributes']['class'][] = 'caption-overlay';
+  }
+  else {
+    $variables['caption'] = FALSE;
+  }
+
+  if ($variables['elements']['#view_mode'] == 'embed') {
+    // TODO: create a formatter or move this to custom module.
+    if (isset($variables['content']['field_file'][0])) {
+      $file_uri = $variables['content']['field_file'][0]['#file']->getFileUri();
+      $file_url = file_create_url($file_uri);
+
+      $variables['content']['name'][0]['#url'] = Url::fromUri($file_url);
+
+      unset($variables['content']['field_file']);
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_slick().
+ */
+function university_theme_preprocess_slick(&$variables) {
+  $variables['attributes']['class'][] = 'slick-slider';
+}
+
+/**
+ * Implements hook_preprocess_user().
+ */
+function university_theme_preprocess_user(array &$variables) {
+  $elements = $variables['elements'];
+  $user     = $elements['#user'];
+
+  // Email is a protected property on the template. So let's add a template var.
+  $variables['email'] = $user->getEmail();
+}
+
+/**
+ * Implements hook_preprocess_views_view__VIEWNAME().
+ *
+ * @param $variables
+ */
+function university_theme_preprocess_views_view__study(&$variables) {
+  // TODO: figure out why we even have to set this! :\
+  $variables['title'] = $variables['view']->getTitle();
+
+  _university_theme_exposed_input_permalink($variables);
+}
+
+/**
+ * Implements hook_preprocess_views_view__VIEWNAME().
+ *
+ * @param $variables
+ */
+function university_theme_preprocess_views_view__employees(&$variables) {
+  // TODO: figure out why we even have to set this! :\
+  $variables['title'] = $variables['view']->getTitle();
+
+  _university_theme_exposed_input_permalink($variables);
+}
+
+/**
+ * Helper function to build a permalink for a exposed views form.
+ *
+ * @param $variables
+ */
+function _university_theme_exposed_input_permalink(&$variables) {
+  if (\Drupal::currentUser()->hasPermission('link to any page')) {
+    $params        = [];
+    $exposed_input = $variables['view']->getExposedInput();
+    if (!empty($exposed_input)) {
+      if (isset($exposed_input['ajax_page_state'])) {
+        unset($exposed_input['ajax_page_state']);
+      }
+      foreach ($exposed_input as $param => $input) {
+        if ($param == 'name' || $param == '_wrapper_format') {
+          continue;
+        }
+        foreach ($input as $key => $value) {
+          if (!empty($value)) {
+            $params[] = $param . '[' . $key . ']=' . $value;
+          }
+        }
+      }
+    }
+
+    if (!empty($params)) {
+      $view_url               = $variables['view']->getUrl()->toString();
+      $params                 = implode('&', $params);
+      $variables['permalink'] = $view_url . '?' . $params;
+    }
+  }
+}
+
+/**
+ * Helper to retrieve Dynamic List view render.
+ */
+function _university_theme_get_dynamic_list($content) {
+  static $tag = 1;
+
+  // Number of items.
+  $quantity = 3;
+  if (!empty($content['field_quantity']['#items'])) {
+    $quantity = (int) $content['field_quantity']['#items']->getString();
+  }
+
+  // Content type.
+  $type = 'article';
+  if (!empty($content['field_content_type']['#items'])) {
+    $type = $content['field_content_type']['#items']->getString();
+  }
+
+  // Build view.
+  $view = Views::getView('dynamic_list');
+  $view->setItemsPerPage($quantity);
+
+  $display = &$view->storage->getDisplay('default');
+  $filters = &$display['display_options']['filters'];
+  $sorts   = &$display['display_options']['sorts'];
+
+  // Type.
+  $filters['type']['value'] = [$type => $type];
+
+  // Filters
+  if ($type !== 'event') {
+    unset($filters['field_date_from_value']);
+  }
+
+  // Category.
+  if (!empty($content['field_taxonomy']['#items'])) {
+    $filters['tid']['value'] = (int) $content['field_taxonomy']['#items']->getString();
+  }
+  else {
+    unset($filters['tid']);
+  }
+
+  // Sorting
+  if ($type === 'event') {
+    unset($sorts['created']);
+  }
+  else {
+    unset($sorts['field_date_from_value']);
+  }
+
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node) {
+    // TODO: remove logic after drupal.org/node/2730631 is in core.
+    if (is_string($node)) {
+      $nid = (int) $node;
+    }
+    else {
+      $nid = $node->id();
+    }
+    $cache_tag = 'dynamic_list:' . $nid . ':' . $tag; // TODO: Add valid tag.
+    $view->storage->addCacheTags([$cache_tag]);
+
+    $tag++;
+  }
+
+  return $view->buildRenderable();
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function university_theme_preprocess_block_shariff(&$variables) {
+
+  // Get settings.
+  $settings = _shariff_get_settings($variables['blocksettings']);
+
+  // Sort services.
+  if (!empty($settings['services'])) {
+    asort($settings['services']);
+  }
+
+  // Build data attributes and escape settings.
+  $data = [];
+  foreach ($settings as $key => $setting) {
+    if (!empty($setting)) {
+      switch ($key) {
+        case 'services':
+          $value = '["' . implode('","', $setting) . '"]';
+          break;
+
+        case 'referrer_track':
+          $value = urlencode(Html::escape($setting));
+          break;
+
+        case 'backend_url':
+        case 'url':
+        case 'mail_url':
+        case 'media_url':
+          $value = Html::escape(UrlHelper::stripDangerousProtocols($setting));
+          break;
+
+        case 'twitter_via':
+        case 'mail_subject':
+        case 'mail_body':
+        case 'flattr_user':
+        case 'flattr_category':
+        default:
+          $value = Html::escape($setting);
+          break;
+
+        case 'shariff_theme':
+          $value = Html::escape($setting);
+          $key   = 'theme';
+          break;
+
+        case 'lang':
+          $value = $setting;
+          break;
+      }
+      // Shariff requires data-attributes with dashes instead of underscores.
+      $data['data-' . str_replace('_', '-', $key)] = $value;
+    }
+  }
+
+  // See https://www.drupal.org/node/1727592.
+  $variables['data_attributes'] = new Attribute($data);
+
+  // Load shariff library.
+  $variant = isset($settings['css']) ? $settings['css'] : 'complete';
+
+  $variables['#attached'] = [
+    'library' => [
+      'shariff/shariff-' . $variant,
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for facets summary item list templates.
+ *
+ * @param $variables
+ */
+function university_theme_preprocess_facets_summary_item_list(&$variables) {
+  $items = &$variables['items'];
+
+  // Hide and move reset link to the bottom.
+  if (!empty($items[0]['value']['#type'])
+      && $items[0]['value']['#type'] == 'link') {
+    $reset_link = $items[0];
+    unset($items[0]);
+
+    if (count($items) > 1) {
+      $items[] = $reset_link;
+    }
+  }
+}

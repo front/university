@@ -1,0 +1,171 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.user.user.field_address
+    - field.field.user.user.field_cristin_id
+    - field.field.user.user.field_department
+    - field.field.user.user.field_description
+    - field.field.user.user.field_first_name
+    - field.field.user.user.field_last_name
+    - field.field.user.user.field_linkedin
+    - field.field.user.user.field_office_number
+    - field.field.user.user.field_phone_mobile
+    - field.field.user.user.field_phone_office
+    - field.field.user.user.field_position
+    - field.field.user.user.field_twitter
+    - image.style.thumbnail
+  module:
+    - field_group
+    - focal_point
+    - link
+    - text
+    - user
+third_party_settings:
+  field_group:
+    group_bio:
+      children:
+        - user_picture
+        - field_first_name
+        - field_last_name
+        - field_position
+        - field_cristin_id
+        - field_department
+        - field_office_number
+        - field_phone_office
+        - field_twitter
+        - field_linkedin
+        - field_address
+        - field_phone_mobile
+      parent_name: ''
+      weight: 0
+      format_type: fieldset
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        required_fields: true
+      label: Bio
+    group_account:
+      children:
+        - account
+        - language
+      parent_name: ''
+      weight: 3
+      format_type: fieldset
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        required_fields: true
+      label: Account
+    group_information:
+      children:
+        - field_description
+      parent_name: ''
+      weight: 1
+      format_type: fieldset
+      format_settings:
+        id: ''
+        classes: ''
+        description: ''
+        required_fields: true
+      label: Information
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  account:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_cristin_id:
+    weight: 6
+    settings:
+      placeholder: 'Person ID on Cristin'
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_department:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_description:
+    weight: 12
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_first_name:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_last_name:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_linkedin:
+    weight: 11
+    settings:
+      placeholder_url: 'https://www.linkedin.com/in/USERNAME'
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_office_number:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_phone_office:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_position:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_twitter:
+    weight: 10
+    settings:
+      placeholder_url: 'https://twitter.com/USERNAME'
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  language:
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_address: true
+  field_phone_mobile: true
+  langcode: true
+  path: true
+  timezone: true

@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: user_profile
+label: 'User profile'
+effects:
+  aef6c104-1866-4cdb-ba42-6bed40ad99db:
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 346
+      height: 436

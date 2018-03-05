@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Study mode'
+vid: study_mode
+description: 'Study modes fetched from EmWeb'
+hierarchy: 0
+weight: 0

@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.study_admission.field_study_cta
+    - taxonomy.vocabulary.study_admission
+  module:
+    - link
+    - text
+id: taxonomy_term.study_admission.default
+targetEntityType: taxonomy_term
+bundle: study_admission
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_study_cta:
+    weight: 1
+    label: hidden
+    settings:
+      trim_length: 80
+      rel: nofollow
+      target: _blank
+      url_only: false
+      url_plain: false
+    third_party_settings: {  }
+    type: link
+    region: content
+hidden:
+  langcode: true

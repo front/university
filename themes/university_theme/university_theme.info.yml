@@ -1,0 +1,28 @@
+name: Drupal University
+type: theme
+description: Example theme for the Drupal University distribution
+package: University
+core: 8.x
+libraries:
+  - university_theme/styles
+  - university_theme/vendor
+  - university_theme/scripts
+
+libraries-override:
+  slick/slick.theme: false
+
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  search_form: 'Search form'
+  highlighted: Highlighted
+  featured_top: 'Featured top'
+  breadcrumb: Breadcrumb
+  content: Content
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  sidebar_third: 'Sidebar third'
+  footer: Footer
+  bottom: Bottom
+  reference: Reference

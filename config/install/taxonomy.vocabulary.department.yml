@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: Department
+vid: department
+description: ''
+hierarchy: 0
+weight: 0

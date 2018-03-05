@@ -1,0 +1,33 @@
+{#
+/**
+ * @file
+ * Theme override to display a block.
+ *
+ * @see template_preprocess_block()
+ */
+#}
+{%
+  set classes = [
+    'row',
+    'widget-content-list',
+    'article',
+    'row-space-large',
+    'carousel-three',
+    'bg-grey',
+    'bg-large-up'
+  ]
+%}
+<section{{ attributes.addClass(classes) }}>
+  <div class="inner-row">
+    {% if label %}
+      <div class="wg-header">
+        <h1 class="wg-title">{{ label }}</h1>
+      </div>
+    {% endif %}
+    {{ title_suffix }}
+
+    {% block content %}
+      {{ content }}
+    {% endblock %}
+  </div>
+</section>

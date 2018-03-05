@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Study semester'
+vid: study_semester
+description: 'Study semesters options fetched from EmWeb'
+hierarchy: 0
+weight: 0

@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: tools-services
+label: 'Tools and Services'
+description: 'Tools and Services menu on the footer'
+locked: false

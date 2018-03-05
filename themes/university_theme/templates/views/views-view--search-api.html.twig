@@ -1,0 +1,31 @@
+{#
+/**
+ * @file
+ * Default theme implementation for search api view template.
+ *
+ * @see template_preprocess_views_view()
+ */
+#}
+{%
+  set classes = [
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+    'row',
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+
+  {% if header.result %}
+    <h2>{{ header.result }}</h2>
+  {% endif %}
+
+  {{ rows }}
+  {{ empty }}
+  {{ pager }}
+
+  {% if footer %}
+    <footer>
+      {{ footer }}
+    </footer>
+  {% endif %}
+</div>

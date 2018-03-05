@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user
+label: User
+type: 'canonical_entities:user'
+pattern: 'tilsette/[user:field_department:entity:name]/[user:field_first_name:value]-[user:field_last_name:value]'
+selection_criteria: {  }
+selection_logic: and
+weight: 0
+relationships: {  }

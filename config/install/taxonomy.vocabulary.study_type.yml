@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Study type'
+vid: study_type
+description: 'Study education types fetch from EmWeb'
+hierarchy: 0
+weight: 0

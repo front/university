@@ -1,0 +1,21 @@
+langcode: en
+status: false
+dependencies:
+  enforced:
+    module:
+      - slick
+id: hero_gallery
+name: hero_gallery
+label: 'Hero Gallery'
+weight: -9
+group: ''
+skin: default
+breakpoints: 0
+optimized: true
+options:
+  options__active_tab: edit-options-settings
+  settings:
+    mobileFirst: true
+    adaptiveHeight: true
+    lazyLoad: ''
+    slidesToShow: 1

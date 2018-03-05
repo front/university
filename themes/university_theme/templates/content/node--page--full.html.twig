@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Theme override to display a node.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+<article{{ attributes.addClass('content-wrapper') }}>
+  {% if content.field_hide_title['#items'].value == '1' %}
+    <h1 class="visuallyhidden">{{ label }}</h1>
+  {% else %}
+    <div class="row content-header">
+      <div class="inner-row">
+        <h1 class="page-title">{{ label }}</h1>
+      </div>
+    </div>
+  {% endif %}
+
+  {{ title_suffix.contextual_links }}
+
+  {{ content.field_paragraphs }}
+</article>

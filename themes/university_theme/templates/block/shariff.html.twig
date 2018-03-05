@@ -1,0 +1,12 @@
+{#
+/**
+ * @file
+ * Theme override to display a block.
+ *
+ * @see shariff_preprocess_block_shariff()
+ */
+#}
+<div class="list-social">
+  <p class="title">{{ 'Share on'|t }}</p>
+  <div class="shariff" {{ attributes|without('class') }} {{ data_attributes|without('class') }}></div>
+</div>

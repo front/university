@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.tools-services
+  module:
+    - system
+  theme:
+    - university_theme
+id: toolsservices
+theme: university_theme
+region: footer
+weight: -7
+provider: null
+plugin: 'system_menu_block:tools-services'
+settings:
+  id: 'system_menu_block:tools-services'
+  label: 'Tools and services'
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+visibility: {  }

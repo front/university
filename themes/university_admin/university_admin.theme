@@ -1,0 +1,192 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the university_admin theme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function university_admin_preprocess_html(array &$variables) {
+  /* Add class to html tag */
+  //$variables['html_attributes']->addClass('no-js');
+
+  // Don't display the site name twice on the front page (and potentially others)
+  /*if (isset($variables['head_title_array']['title']) && isset($variables['head_title_array']['name']) && ($variables['head_title_array']['title'] == $variables['head_title_array']['name'])) {
+    $variables['head_title'] = $variables['head_title_array']['name'];
+  }*/
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function university_admin_page_attachments_alter(array &$page) {
+  // Tell IE to use latest rendering engine (not to use compatibility mode).
+  /*$ie_edge = [
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => [
+    'http-equiv' => 'X-UA-Compatible',
+    'content' => 'IE=edge',
+    ],
+  ];
+  $page['#attached']['html_head'][] = [$ie_edge, 'ie_edge'];*/
+}
+
+/**
+ * Implements hook_preprocess_page() for page.html.twig.
+ */
+function university_admin_preprocess_page(array &$variables) {
+}
+
+/**
+ * Implements hook_theme_suggestions_page_alter().
+ */
+function university_admin_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+
+}
+
+/**
+ * Implements hook_theme_suggestions_node_alter().
+ */
+function university_admin_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+  /*$node = $variables['elements']['#node'];
+
+  if ($variables['elements']['#view_mode'] == "full") {
+
+  }*/
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for Block document templates.
+ */
+function university_admin_preprocess_block(array &$variables) {
+}
+
+/**
+ * Implements hook_theme_suggestions_field_alter().
+ */
+function university_admin_theme_suggestions_field_alter(array &$suggestions, array $variables) {
+  /*$element = $variables['element'];
+  $suggestions[] = 'field__' . $element['#view_mode'];
+  $suggestions[] = 'field__' . $element['#view_mode'] . '__' . $element['#field_name'];*/
+}
+
+/**
+ * Implements hook_theme_suggestions_field_alter().
+ */
+function university_admin_theme_suggestions_fieldset_alter(array &$suggestions, array $variables) {
+  /*$element = $variables['element'];
+  if (isset($element['#attributes']['class']) && in_array('form-composite', $element['#attributes']['class'])) {
+    $suggestions[] = 'fieldset__form_composite';
+  }*/
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function university_admin_preprocess_node(array &$variables) {
+  // Default to turning off byline/submitted.
+  //$variables['display_submitted'] = FALSE;
+}
+
+/**
+ * Implements hook_theme_suggestions_views_view_alter().
+ */
+function university_admin_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+}
+
+/**
+ * Implements hook_preprocess_form().
+ */
+function university_admin_preprocess_form(array &$variables) {
+  //$variables['attributes']['novalidate'] = 'novalidate';
+}
+
+/**
+ * Implements hook_preprocess_select().
+ */
+function university_admin_preprocess_select(array &$variables) {
+  //$variables['attributes']['class'][] = 'select-chosen';
+}
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function university_admin_preprocess_field(array &$variables, $hook) {
+  /*switch ($variables['element']['#field_name']) {
+  }*/
+}
+
+/**
+ * Implements hook_preprocess_details().
+ */
+function university_admin_preprocess_details(array &$variables) {
+  /*$variables['attributes']['class'][] = 'details';
+  $variables['summary_attributes']['class'] = 'summary';*/
+}
+
+/**
+ * Implements hook_theme_suggestions_details_alter().
+ */
+function university_admin_theme_suggestions_details_alter(array &$suggestions, array $variables) {
+}
+
+/**
+ * Implements hook_preprocess_menu_local_task().
+ */
+function university_admin_preprocess_menu_local_task(array &$variables) {
+  //$variables['element']['#link']['url']->setOption('attributes', ['class'=>'rounded']);
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ *
+ * @param                    $form
+ * @param FormStateInterface $form_state
+ */
+function university_admin_form_node_form_alter(&$form, FormStateInterface $form_state) {
+  // Add CSS file for layout optimization.
+  $form['#attached']['library'][] = 'thunder_article/article_form_styling';
+
+  $form['custom'] = [
+    '#type'       => 'container',
+    '#group'      => 'advanced',
+    '#weight'     => -101,
+    '#attributes' => [
+      'class' => ['entity-meta__header'],
+    ],
+  ];
+
+  if (isset($form['langcode'])) {
+    $form['langcode']['#group'] = 'custom';
+    $form['langcode']['#open']  = TRUE;
+  }
+
+  if ($form['#form_id'] == 'node_event_form' || $form['#form_id'] == 'node_event_edit_form') {
+    unset($form['field_link']['widget'][0]['uri']['#description']);
+    unset($form['field_location_url']['widget'][0]['uri']['#description']);
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ *
+ * @param                    $form
+ * @param FormStateInterface $form_state
+ */
+function university_admin_form_user_form_alter(&$form, FormStateInterface $form_state) {
+  // Add CSS file for layout optimization.
+  $form['#attached']['library'][] = 'thunder_article/article_form_styling';
+
+  if (isset($form['field_address'])) {
+    $form['field_address']['widget'][0]['#type'] = 'fieldset';
+  }
+
+  if (isset($form['language'])) {
+    $form['language']['#type'] = 'fieldset';
+  }
+}

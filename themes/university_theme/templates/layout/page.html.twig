@@ -1,0 +1,115 @@
+{#
+/**
+ * @file
+ * Theme override to display a single page.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - base_path: The base URL path of the Drupal installation. Will usually be
+ *   "/" unless you have installed Drupal in a sub-directory.
+ * - is_front: A flag indicating if the current page is the front page.
+ * - logged_in: A flag indicating if the user is registered and signed in.
+ * - is_admin: A flag indicating if the user has permission to access
+ *   administration pages.
+ *
+ * Site identity:
+ * - front_page: The URL of the front page. Use this instead of base_path when
+ *   linking to the front page. This includes the language domain or prefix.
+ *
+ * Page content (in order of occurrence in the default page.html.twig):
+ * - messages: Status and error messages. Should be displayed prominently.
+ * - node: Fully loaded node, if there is an automatically-loaded node
+ *   associated with the page and the node ID is the second argument in the
+ *   page's path (e.g. node/12345 and node/12345/revisions, but not
+ *   comment/reply/12345).
+ *
+ * @see template_preprocess_page()
+ * @see html.html.twig
+ */
+#}
+<header role="banner" class="page-header" tabindex="-1" id="top">
+  <div class="inner-row">
+    <div class="header-top">
+      {{ page.header }}
+      <a class="nav-toggle search" data-btn="search" href="#search" title="{{ 'Open search'|t }}"></a>
+      <a class="nav-toggle nav xlarge-down" data-btn="nav" href="#nav" title="{{ 'Open menu'|t }}"></a>
+    </div>
+    <nav class="page-navigation" role="navigation">
+      <div class="nav-group" tabindex="-1" id="nav">
+        {{ page.primary_menu }}
+        {{ page.secondary_menu }}
+        <a href="#top" class="nav-toggle nav-close xlarge-down" title="{{ 'Close menu'|t }}" data-btn="nav-close"></a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+{# TODO: add exposed form here. #}
+{{ page.search_form }}
+<div class="search-group" tabindex="-1" id="search">
+  <div class="inner-row">
+    <form action="/sok">
+      <label for="page-seach" class="visuallyhidden">Søk her</label>
+      <div class="input-button-group input-underline">
+        <input name="keys" type="search" value=""
+               placeholder="{{ 'Search on university'|t }}">
+        <input title="{{ 'Search'|t }}" type="submit" value="" href="/sok"
+               class="btn-search input-btn-search">
+      </div>
+    </form>
+    <a href="#top" class="nav-toggle search-close" data-btn="search-close"
+       title="{{ 'Close search'|t }}"></a>
+  </div>
+</div>
+
+{{ page.breadcrumb }}
+
+{{ page.highlighted }}
+
+{{ page.help }}
+
+<main role="main" class="page-body">
+  <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+
+  {% if node %}
+    {{ page.content }}
+  {% else %}
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="inner-row">
+          {{ page.content }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if page.sidebar_first %}
+    <aside class="layout-sidebar-first" role="complementary">
+      {{ page.sidebar_first }}
+    </aside>
+  {% endif %}
+
+  {% if page.sidebar_second or page.sidebar_third %}
+    <footer class="content-footer">
+      {{ page.sidebar_second }}
+      {{ page.sidebar_third }}
+    </footer>
+  {% endif %}
+</main>
+
+<footer class="page-footer" role="contentinfo">
+  <div class="inner-row">
+    {% if page.footer %}
+      <div class="grid-three">
+        {{ page.footer }}
+      </div>
+    {% endif %}
+
+    {{ page.bottom }}
+
+    <div class="center">
+      <a href="#" class="back-to-top btn">{{ 'Back to top'|t }}</a>
+    </div>
+  </div>
+</footer>

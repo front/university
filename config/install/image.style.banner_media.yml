@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: banner_media
+label: 'Banner Media'
+effects:
+  6381444f-8586-48d5-88d8-c4d9a6813848:
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 1100
+      height: 580

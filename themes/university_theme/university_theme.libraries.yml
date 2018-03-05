@@ -1,0 +1,22 @@
+styles:
+  version: VERSION
+  css:
+    theme:
+      css/styles.css: {}
+
+scripts:
+   version: VERSION
+   js:
+     js/script.min.js: {}
+   dependencies:
+     - core/jquery
+     - core/drupal
+     - university_theme/vendor
+     - slick/slick
+
+vendor:
+   version: VERSION
+   js:
+     https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.2.0/jquery.fitvids.min.js: {}
+   dependencies:
+     - core/jquery

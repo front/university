@@ -1,0 +1,55 @@
+{#
+/**
+ * @file
+ * Default theme implementation for main view template.
+ *
+ * @see template_preprocess_views_view()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+set classes = [ dom_id ? 'js-view-dom-id-' ~ dom_id ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  <div class="row">
+    <div class="inner-row">
+      <h1 class="page-title">{{ title }}</h1>
+
+      {% if header %}
+        <h2 class="subtitle">{{ header|without('result') }}</h2>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="row row-space-medium bg-turquoise-light paperflip">
+    <div class="inner-row">
+      {{ exposed }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="inner-row">
+      <div class="l-one-and-half-one">
+        <div class="l-item-first">
+          <h2>{{ header.result }}</h2>
+          {% if permalink %}
+            <p class="meta"><b>{{ 'Permalink'|t }}:</b> {{ permalink }}</p>
+          {% endif %}
+
+          {{ rows }}
+          {{ empty }}
+          {{ pager }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{ more }}
+
+  {% if footer %}
+    <footer>
+      {{ footer }}
+    </footer>
+  {% endif %}
+</div>

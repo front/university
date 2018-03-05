@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a facets summary item list.
+ *
+ * @see facets_summary_preprocess_facets_summary_item_list()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if items or empty %}
+  {%- if title is not empty -%}
+    <h3>{{ title }}</h3>
+  {%- endif -%}
+
+  {%- if items -%}
+    {%- for item in items -%}
+      <div class="filter-item">{{ item.value }}</div>
+    {%- endfor -%}
+  {%- else -%}
+    {{- empty -}}
+  {%- endif -%}
+{%- endif %}

@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_months
+    - taxonomy.vocabulary.study_duration
+id: taxonomy_term.study_duration.field_months
+field_name: field_months
+entity_type: taxonomy_term
+bundle: study_duration
+label: Duration
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: month|months
+field_type: integer

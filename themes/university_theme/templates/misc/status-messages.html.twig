@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Theme override for status messages.
+ */
+#}
+{% for type, messages in message_list %}
+  {%
+    set classes = [
+      'messages',
+      'messages--' ~ type,
+    ]
+  %}
+  <div class="row row-space-small">
+    <div class="inner-row">
+      <div role="contentinfo"
+          aria-label="{{ status_headings[type] }}"{{ attributes.addClass(classes)|without('role', 'aria-label') }}>
+        <div class="messages--item"{{ type == 'error' ? ' role="alert"' : '' }}>
+          {% if status_headings[type] %}
+            <h2 class="visually-hidden">{{ status_headings[type] }}</h2>
+          {% endif %}
+          {% if messages|length > 1 %}
+            <ul>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            {{ messages|first }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}

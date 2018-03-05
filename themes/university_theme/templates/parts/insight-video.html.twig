@@ -1,0 +1,21 @@
+{%
+    set classes = ['story']
+%}
+<div class="grid-item">
+    <article{{ attributes.addClass(classes) }}>
+
+        {% if insight_video_row.video|render %}
+            <div class="image">{{ insight_video_row.video }}</div>
+        {% endif %}
+
+        <h2 class="name">{{ insight_video_row.label }}</h2>
+
+        <blockquote class="quote">
+            {{ insight_video_row.teaser_text }}
+        </blockquote>
+
+        <div class="links">
+            <a href="/node/28513/" class="arrow-link block">{{ 'More insights'|t }}</a>
+        </div>
+    </article>
+</div>

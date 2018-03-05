@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * Theme implementation to display a divless paragraph.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'row',
+    'widget-banner',
+    'light-on-dark',
+    'center'
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  <div class="inner-row">
+    <div class="wg-body">
+      {% if banner_image %}
+        <div class="banner" style="background-image: url({{ banner_image }});">
+      {% else %}
+        <div class="banner">
+      {% endif %}
+
+        {% if content.field_text %}
+          <div class="inner-banner">
+            {{ content.field_text }}
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>

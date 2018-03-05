@@ -1,0 +1,229 @@
+{#
+/**
+ * @file
+ * Theme override to display a node.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+<article{{ attributes.addClass('content-wrapper') }}>
+
+  <div class="row row-space-large">
+    <div class="inner-row">
+      <div class="header-group">
+        {% if node.field_study_education_type.value %}
+          <p class="study-degree">{{ content.field_study_education_type }}</p>
+        {% endif %}
+
+        <h1 class="page-title">{{ label }}</h1>
+
+        {% if node.field_study_mode.value %}
+          <p class="study-type">{{ content.field_study_mode }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if content.field_study_media %}
+    <div class="row widget-gallery carousel-one-autoplay hero">
+      <div class="inner-row">
+        <div class="wg-body">
+          {{ content.field_study_media }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row row-space-large">
+    <div class="inner-row">
+      <div class="l-two-one">
+        <div{{ content_attributes.addClass('l-item-first narrow copy') }}>
+          {{ content.field_study_intro }}
+        </div>
+
+        {% if node.field_study_admission_type.value or node.field_study_application_code.value %}
+          <div class="l-item-second">
+            <div class="cta-wrapper">
+              {% if study_cta_txt %}
+                <span class="btn">{{ study_cta_txt }}</span>
+              {% else %}
+                {{ study_cta }}
+              {% endif %}
+              <!--
+              <a href="https://www.samordnaopptak.no/info/"
+                 class="btn">{{ 'Search for a study place!'|t }}</a>
+                 -->
+
+              {% if node.field_study_application_code.value %}
+                <p class="study-code">{{ 'Application code(s)'|t }}
+                  : {{ content.field_study_application_code }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if node.field_study_insights.value or node.field_insight_video.value %}
+    <section class="row widget-story row-space-large row-space-reset-mobile bg-turquoise-light-large-only carousel-one">
+      <div class="inner-row">
+        <div class="wg-header">
+          <h1 class="wg-title">{{ 'Insights'|t }}</h1>
+        </div>
+        {{ study_insights }}
+      </div>
+    </section>
+  {% endif %}
+
+  <div class="row row-space-large bleed">
+    <div class="inner-row">
+      <div class="l-two-one">
+        <div class="l-item-first">
+          <div class="accordion large">
+            <div class="accordion-item open">
+              <h2 class="title"><a href="#"
+                                   class="arrow-link block">{{ 'Info and deadlines'|t }}</a>
+              </h2>
+              <div class="copy">
+                <div class="facts">
+                  {% if node.field_study_duration.value %}
+                    <p class="fact"><span
+                          class="label">{{ 'Duration'|t }}</span> {{ content.field_study_duration }}
+                    </p>
+                  {% endif %}
+
+                  <!-- Minimum score school goes here -->
+
+                  {% if node.field_study_credits.value %}
+                    <p class="fact"><span
+                          class="label">{{ 'Credits'|t }}</span> {{ content.field_study_credits }}
+                    </p>
+                  {% endif %}
+
+                  {% if node.field_study_start_semester.value %}
+                    <p class="fact"><span
+                          class="label">{{ 'Start'|t }}</span> {{ content.field_study_start_semester }}
+                    </p>
+                  {% endif %}
+
+                  {% if node.field_study_application_date.value %}
+                    <p class="fact"><span
+                          class="label">{{ 'Deadline'|t }}</span> {{ content.field_study_application_date }}
+                    </p>
+                  {% endif %}
+
+                  {% if content.rolling_admission|render %}
+                    <p class="fact"><span
+                              class="label">{{ 'Deadline'|t }}</span> {{ content.rolling_admission }}
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            {% if node.field_study_text.value %}
+              <div class="accordion-item">
+                <h2 class="title"><a href="#"
+                                     class="arrow-link block">{{ 'Study content'|t }}</a>
+                </h2>
+                <div class="copy">
+                  {{ content.field_study_text }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if node.field_study_admission_reqs.value %}
+              <div class="accordion-item">
+                <h2 class="title"><a href="#"
+                                     class="arrow-link block">{{ 'Admission requirements'|t }}</a>
+                </h2>
+                <div class="copy">
+                  {{ content.field_study_admission_reqs }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if node.field_study_internationalization.value %}
+              <div class="accordion-item">
+                <h2 class="title"><a href="#"
+                                     class="arrow-link block">{{ 'Internationalization'|t }}</a>
+                </h2>
+                <div class="copy">
+                  {{ content.field_study_internationalization }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if node.field_study_teaching_methods.value %}
+              <div class="accordion-item">
+                <h2 class="title"><a href="#"
+                                     class="arrow-link block">{{ 'Teaching methods and assessment schemes'|t }}</a>
+                </h2>
+                <div class="copy">
+                  {{ content.field_study_teaching_methods }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if node.field_study_work_further_studies.value %}
+              <div class="accordion-item">
+                <h2 class="title"><a href="#"
+                                     class="arrow-link block">{{ 'Professional prospects and further studies'|t }}</a>
+                </h2>
+                <div class="copy">
+                  {{ content.field_study_work_further_studies }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if node.field_study_contact.value %}
+              <div class="accordion-item">
+                <h2 class="title"><a href="#"
+                                     class="arrow-link block">{{ 'Contacts'|t }}</a>
+                </h2>
+                <div class="copy">
+                  {{ content.field_study_contact }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if study_information %}
+              {% set study_fields = {
+              field_study_meetup: 'Meetup(s)',
+              field_study_education: 'Place of education',
+              field_study_information: 'Other information'
+              } %}
+
+              {% for field, label in study_fields %}
+                {% if study_information[field].value %}
+                  <div class="accordion-item">
+                    <h2 class="title"><a href="#"
+                                         class="arrow-link block">{{ label|t }}</a>
+                    </h2>
+                    <div class="copy">
+                      {{ study_information[field].value|raw }}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+
+            {% endif %}
+
+            {% if study_plan %}
+              <div class="accordion-item">
+                <h2 class="title"><a href="#"
+                                     class="arrow-link block">{{ 'Study plan'|t }}</a>
+                </h2>
+                <div class="copy">
+                  {{ study_plan }}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</article>

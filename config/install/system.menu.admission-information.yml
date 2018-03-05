@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: admission-information
+label: 'Admission information'
+description: 'Admission information'
+locked: false

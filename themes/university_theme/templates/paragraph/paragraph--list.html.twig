@@ -1,0 +1,36 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a paragraph.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'row',
+    'widget-content-list',
+    'article',
+  ]
+%}
+<section{{ attributes.addClass(classes) }}>
+  <div class="inner-row">
+    {% if content.field_title|render or content.field_header|render %}
+      <div class="wg-header">
+        {% if content.field_title|render %}
+          <h1 class="wg-title">{{ content.field_title }}</h1>
+        {% endif %}
+
+        {{ content.field_header }}
+      </div>
+    {% endif %}
+
+    <div class="wg-body">
+      {{ content.field_items }}
+    </div>
+
+    {{ content.field_footer }}
+  </div>
+</section>

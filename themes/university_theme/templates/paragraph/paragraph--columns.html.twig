@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a paragraph.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+<section{{ attributes.addClass('row') }}>
+  <div class="inner-row">
+    <div class="wg-body">{{ content }}</div>
+  </div>
+</section>

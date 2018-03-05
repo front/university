@@ -1,0 +1,13 @@
+{#
+/**
+ * @file
+ * Theme override for a field.
+ *
+ * @see template_preprocess_field()
+ */
+#}
+{% for item in items %}
+  <div{{ item.attributes.addClass('grid-item') }}>
+    {{ item.content }}
+  </div>
+{% endfor %}

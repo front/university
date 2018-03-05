@@ -1,0 +1,21 @@
+<p>{% if work.url is not empty %}
+    <strong><a href="{{ work.url }}"
+               target="_blank">{{ work.title }}</a></strong>
+  {% else %}
+    <strong>{{ work.title }}</strong>
+  {% endif %}
+  {% if work.isbn is not empty %}
+    [ISBN {{ work.isbn }}]
+  {% endif %}
+  {% if work.pages is not empty %}
+    {{ work.pages }}s.
+  {% endif %}
+  <br>
+  <em>{{ 'Published'|t }} {{ work.year }} {{ 'by'|t }}
+    {% for work_author in work.authors %}
+      {{ work_author.first_name }} {{ work_author.last_name }}{% if not loop.last %}, {% endif %}
+    {% endfor %}</em>
+  <br>
+  {% if work.publisher is not empty %}
+    {{ 'Publisher:'|t }} {{ work.publisher }}
+  {% endif %}</p>

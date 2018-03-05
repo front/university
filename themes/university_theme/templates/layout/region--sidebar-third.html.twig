@@ -1,0 +1,29 @@
+{#
+/**
+ * @file
+ * Theme override to display a region.
+ *
+ * Available variables:
+ * - content: The content for this region, typically blocks.
+ * - attributes: HTML attributes for the region div.
+ * - region: The name of the region variable as defined in the theme's
+ *   .info.yml file.
+ *
+ * @see template_preprocess_region()
+ */
+#}
+{% if content %}
+  <aside class="info-overlay info-open">
+    {% if title %}
+      <a href="#" class="open-btn"><span class="icon"></span>{{ title }}</a>
+    {% else %}
+      <a href="#" class="open-btn"><span class="icon"></span>{{ 'Information'|t }}</a>
+    {% endif %}
+    <a href="#" class="close-btn">{{ 'Close'|t }}</a>
+    <div{{ attributes.addClass('info-copy grid-two') }}>
+      <div class="inner-row">
+        {{ content }}
+      </div>
+    </div>
+  </aside>
+{% endif %}

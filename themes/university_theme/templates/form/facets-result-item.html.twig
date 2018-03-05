@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * Default theme implementation of a facet result item.
+ *
+ * Available variables:
+ * - value: The item value.
+ * - show_count: If this facet provides count.
+ * - count: The amount of results.
+ * - is_active: The item is active.
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="checkbox-group">
+  {% if is_active %}
+    <input type="checkbox" class="js-facet-deactivate" checked>
+  {% else %}
+    <input type="checkbox">
+  {% endif %}
+  <label>{{ value }}</label>
+</div>
+
+{% if show_count %}
+  <span class="amount">({{ count }})</span>
+{% endif %}

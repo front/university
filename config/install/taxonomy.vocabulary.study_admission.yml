@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Study admission'
+vid: study_admission
+description: 'Study admission types fetched from EmWeb'
+hierarchy: 0
+weight: 0

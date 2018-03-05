@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * University_theme theme implementation to present all user data.
+ *
+ * @see template_preprocess_user()
+ *
+ * @ingroup themeable
+ */
+#}
+{% set profile = path('entity.user.canonical', {'user': user.id})  %}
+<article class="content-teaser employee-2 ">
+  <a href="{{ profile }}" class="link-block">
+    <h1 class="title">{{ content.field_first_name|render|striptags }} {{ content.field_last_name|render|striptags }}</h1>
+    {% if content.field_position|render %}
+      <p class="position">{{ content.field_position|render|striptags }}</p>
+    {% endif %}
+  </a>
+  {% if content.field_department|render %}
+    <p class="department">{{ 'Department'|t }}: {{ content.field_department }}</p>
+  {% endif %}
+  <a href="mailto:{{ email }}">{{ 'Send e-mail'|t }}</a>
+</article>

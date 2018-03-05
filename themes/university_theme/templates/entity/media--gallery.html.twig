@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Default theme implementation to present a media entity.
+ *
+ * Available variables:
+ * - name: Name of the media.
+ * - content: Media content.
+ *
+ * @see template_preprocess_media()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if content and elements['#view_mode'] == 'hero' %}
+  {{ content }}
+{% elseif content %}
+  <div{{ attributes.addClass('hero-slider') }}>
+    {{ content }}
+  </div>
+{% endif %}

@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.apply-information
+  module:
+    - system
+  theme:
+    - university_theme
+id: applyinformation
+theme: university_theme
+region: footer
+weight: -8
+provider: null
+plugin: 'system_menu_block:apply-information'
+settings:
+  id: 'system_menu_block:apply-information'
+  label: 'Apply information'
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+visibility: {  }

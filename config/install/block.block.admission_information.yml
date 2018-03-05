@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.admission-information
+  module:
+    - ctools
+    - node
+    - system
+  theme:
+    - university_theme
+id: admission_information
+theme: university_theme
+region: sidebar_third
+weight: -13
+provider: null
+plugin: 'system_menu_block:admission-information'
+settings:
+  id: 'system_menu_block:admission-information'
+  label: 'Admission information'
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      study: study
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+  node_type:
+    id: node_type
+    bundles:
+      study: study
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

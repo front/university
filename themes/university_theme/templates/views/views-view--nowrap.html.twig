@@ -1,0 +1,13 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% for row in rows %}
+  <div class="grid-item">
+    {{ row }}
+  </div>
+{% endfor %}

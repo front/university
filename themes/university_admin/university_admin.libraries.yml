@@ -1,0 +1,10 @@
+university-admin:
+  css:
+    theme:
+      css/backend.css: {}
+      css/install-page.css: {}
+  js:
+    js/script.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

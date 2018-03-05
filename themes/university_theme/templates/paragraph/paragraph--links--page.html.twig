@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * Theme implementation to display a divless paragraph.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'row',
+    'row-space-medium'
+  ]
+%}
+<section{{ attributes.addClass(classes) }}>
+  <div class="inner-row">
+    {% if content.field_title %}
+      <div class="wg-header">
+        <h2 class="wg-title">{{ content.field_title }}</h2>
+
+        {% if content.field_header %}
+          <div class="wg-intro">{{ content.field_header }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="wg-body">
+      {{ content.field_links }}
+    </div>
+
+    {% if content.field_footer %}
+      <div class="wg-footer">{{ content.field_footer }}</div>
+    {% endif %}
+  </div>
+</section>

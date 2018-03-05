@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a paragraph.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set item_link = content.field_link ? content.field_link[0]['#url'] : '#'
+%}
+<div class="grid-item">
+  <article class="content-teaser article">
+    <a href="{{ item_link }}" class="link-block">
+      {% if content.field_media %}
+        <div class="image">{{ content.field_media }}</div>
+      {% endif %}
+
+      <h1 class="title">{{ content.field_title }}</h1>
+
+      {% if content.field_excerpt %}
+        <div class="desc">
+          {{ content.field_excerpt }}
+        </div>
+      {% endif %}
+    </a>
+  </article>
+</div>

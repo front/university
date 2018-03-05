@@ -1,0 +1,13 @@
+{#
+/**
+ * @file
+ * Theme override for a field.
+ *
+ * @see template_preprocess_field()
+ */
+#}
+{% for item in items %}
+  <h2 class="title">
+    <a href="#" class="arrow-link block">{{ item.content }}</a>
+  </h2>
+{% endfor %}

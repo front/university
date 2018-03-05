@@ -1,0 +1,13 @@
+{#
+/**
+ * @file
+ * Theme override for a field.
+ *
+ * @see template_preprocess_field()
+ */
+#}
+<div{{ attributes.addClass('accordion large') }}>
+  {% for item in items %}
+    {{ item.content }}
+  {% endfor %}
+</div>

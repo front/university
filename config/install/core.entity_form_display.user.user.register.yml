@@ -1,0 +1,41 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.user.register
+    - field.field.user.user.field_department
+    - field.field.user.user.field_description
+    - field.field.user.user.field_first_name
+    - field.field.user.user.field_last_name
+    - field.field.user.user.field_office_number
+    - field.field.user.user.field_phone_office
+    - field.field.user.user.field_position
+  module:
+    - user
+id: user.user.register
+targetEntityType: user
+bundle: user
+mode: register
+content:
+  account:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_address: true
+  field_cristin_id: true
+  field_department: true
+  field_description: true
+  field_first_name: true
+  field_last_name: true
+  field_linkedin: true
+  field_office_number: true
+  field_phone_mobile: true
+  field_phone_office: true
+  field_position: true
+  field_twitter: true
+  langcode: true
+  language: true
+  path: true
+  timezone: true

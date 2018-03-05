@@ -1,0 +1,33 @@
+{#
+/**
+ * @file
+ * Theme override to display a node.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+{%
+  set classes = ['story']
+%}
+<article{{ attributes.addClass(classes) }}>
+  {{ title_suffix }}
+
+  {% if content.field_teaser_media|render %}
+    <div class="image">{{ content.field_teaser_media }}</div>
+  {% endif %}
+
+  <h2 class="name">{{ label }}</h2>
+
+  {% if content.field_subtitle|render %}
+    <p class="position">{{ content.field_subtitle }}</p>
+  {% endif %}
+
+  <blockquote class="quote">
+    {{ content.field_teaser_text }}
+  </blockquote>
+
+  <div class="links">
+    <a href="{{ url }}" rel="bookmark" class="arrow-link block">{{ 'Read the interview'|t }}</a>
+    <a href="/node/28513/" class="arrow-link block">{{ 'More insights'|t }}</a>
+  </div>
+</article>

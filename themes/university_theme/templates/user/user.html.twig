@@ -1,0 +1,82 @@
+{#
+/**
+ * @file
+ * University_theme theme implementation to present all user data.
+ *
+ * This template is used when viewing a registered user's page,
+ * e.g., example.com/user/123. 123 being the user's ID.
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ *   print a subset such as 'content.field_example'. Fields attached to a user
+ *   such as 'user_picture' are available as 'content.user_picture'.
+ * - attributes: HTML attributes for the container element.
+ * - user: A Drupal User entity.
+ *
+ * @see template_preprocess_user()
+ *
+ * @ingroup themeable
+ */
+#}
+<article class="content-wrapper">
+  <div class="row">
+    <div class="inner-row">
+      <div class="l-indent">
+        <div class="l-pull-aside">
+          <div class="profile-img">
+            {% if content.user_picture|render %}
+              {{ content.user_picture }}
+            {% else %}
+              <div>
+                <img src="/themes/custom/university_theme/images/default-user.png"
+                     alt="{{ 'Default profile picture'|t }}"/>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        <h1 class="page-title">{{ content.field_first_name|render|striptags }} {{ content.field_last_name|render|striptags }}</h1>
+        {% if content.field_position|render %}
+          <p class="position">{{ content.field_position|render|striptags }}</p>
+        {% endif %}
+        {% if content.field_department|render %}
+          <p class="department">{{ content.field_department|render|striptags }}</p>
+        {% endif %}
+
+        <div class="l-pull-aside">
+          <ul class="list-icons contact-info">
+            <li>
+              <a href="mailto:{{ email }}" class="icon-envelope">{{ email }}</a>
+            </li>
+            {% if content.field_phone_office|render %}
+              <li>
+                <a href="tel:{{ content.field_phone_office|render|striptags }}"
+                   class="icon-phone">{{ content.field_phone_office|render|striptags }}</a>
+              </li>
+            {% endif %}
+            {% if content.field_office_number|render %}
+              <li>
+                <span
+                    class="icon-map-marker">{{ content.field_office_number|render|striptags }}</span>
+              </li>
+            {% endif %}
+            {% if content.field_twitter|render %}
+              {% set twitter_url = content.field_twitter[0]['#title']|split('/') %}
+              <li><a href="{{ content.field_twitter[0]['#title'] }}"
+                     class="icon-twitter"
+                     target="_blank">@{{ twitter_url|last }}</a></li>
+            {% endif %}
+            {% if content.field_linkedin|render %}
+              <li><a href="{{ content.field_linkedin[0]['#title'] }}"
+                     class="icon-linkedin" target="_blank">LinkedId</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        {% if content.field_description %}
+          <div class="copy">
+            {{ content.field_description }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * Theme override to display a node.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+{% set separator = (node.field_study_start_semester.value and node.field_study_mode.value) ? ' | ' %}
+{% set play_icon_class = (node.field_insight_video.value) ? 'has-video' %}
+<article{{ attributes.addClass('content-teaser', 'study-2', play_icon_class) }}>
+  <a href="{{ url }}" class="link-block">
+    {% if content.field_study_media|render or node.field_insight_video.value %}
+      <div class="image">
+        {% if node.field_insight_video.value %}
+          {{ insight_video_thumbnail }}
+        {% else %}
+          {{ content.field_study_media }}
+        {% endif %}
+      </div>
+    {% endif %}
+    <h1{{ title_attributes.addClass('title') }}>{{ label }}</h1>
+
+    {% if node.field_study_education_type.value %}
+      <p class="study-degree">{{ content.field_study_education_type }}</p>
+    {% endif %}
+
+    {% if node.field_study_start_semester.value or node.field_study_mode.value %}
+      <p class="desc">{{ content.field_study_start_semester }}{{ separator }}{{ content.field_study_mode }}</p>
+    {% endif %}
+  </a>
+</article>

@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Study duration'
+vid: study_duration
+description: 'Study duration options fetched from EmWeb'
+hierarchy: 0
+weight: 0

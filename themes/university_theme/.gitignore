@@ -1,0 +1,10 @@
+build
+node_modules
+source
+.git-cache
+.DS_Store
+.sketch
+
+# Fractal files and folders
+assets
+build-fractal

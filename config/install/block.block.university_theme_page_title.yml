@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+  theme:
+    - university_theme
+id: university_theme_page_title
+theme: university_theme
+region: content
+weight: -12
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      article: article
+      event: event
+      page: page
+      study: study
+      study_information: study_information
+    negate: true
+    context_mapping:
+      node: '@node.node_route_context:node'

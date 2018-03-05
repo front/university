@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Theme override to display a node.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+<article{{ attributes.addClass('content-teaser') }}>
+  <a href="{{ url }}" rel="bookmark" class="link-block">
+    <h1 class="title">{{ label }}</h1>
+  </a>
+
+  {% if event.datetime %}
+    <time datetime="{{ event.datetime }}" class="date">{{ event.hour }}</time>
+  {% endif %}
+
+  {% if content.location %}
+    <p class="location">{{ content.location }}</p>
+  {% endif %}
+</article>
