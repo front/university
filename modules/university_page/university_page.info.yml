@@ -1,0 +1,5 @@
+name: 'University Page'
+type: module
+description: 'Provides Page content type for University distribution.'
+core: 8.x
+package: University
