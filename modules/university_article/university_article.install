@@ -1,0 +1,6 @@
+<?php
+
+function university_article_module_preinstall($module) {
+  \Drupal::entityManager()->getStorage('node_type')->load('article')->delete();
+}
+
