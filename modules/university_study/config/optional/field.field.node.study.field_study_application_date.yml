@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_study_application_date
+    - node.type.study
+  module:
+    - datetime
+id: node.study.field_study_application_date
+field_name: field_study_application_date
+entity_type: node
+bundle: study
+label: 'Application date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

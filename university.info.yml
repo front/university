@@ -39,6 +39,7 @@ dependencies:
   - university_article
   - university_event
   - university_page
+  - university_study
 
 themes:
   - university_theme
