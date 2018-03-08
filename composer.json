@@ -74,11 +74,7 @@
             "drush/contrib/{$name}": [
                 "type:drupal-drush"
             ]
-        },
-        "patches": {
-            "drupal/facets": {
-                "Fix fatal error on first facet being empty": "https://gist.githubusercontent.com/roborn/c97e84bc3511739226678050650b3ac3/raw/0d9713237598eda68e9fc20f0fe270ac7b810401/facets_empty_facet.patch"
-            }
         }
     }
 }
+
