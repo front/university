@@ -1,0 +1,5 @@
+name: 'University Article'
+type: module
+description: 'Provides Article content type for University distribution.'
+core: 8.x
+package: University

@@ -36,6 +36,7 @@ dependencies:
   - update
   # university modules
   - university_paragraphs
+  - university_article
   - university_page
 
 themes:

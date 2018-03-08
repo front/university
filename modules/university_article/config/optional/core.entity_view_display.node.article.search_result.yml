@@ -1,0 +1,53 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.search_result
+    - field.field.node.article.field_channel
+    - field.field.node.article.field_department
+    - field.field.node.article.field_hero_media
+    - field.field.node.article.field_meta_tags
+    - field.field.node.article.field_paragraphs
+    - field.field.node.article.field_seo_title
+    - field.field.node.article.field_subtitle
+    - field.field.node.article.field_tags
+    - field.field.node.article.field_teaser_media
+    - field.field.node.article.field_teaser_text
+    - image.style.media_thumbnail
+    - node.type.article
+  module:
+    - media_entity
+    - user
+id: node.article.search_result
+targetEntityType: node
+bundle: article
+mode: search_result
+content:
+  field_hero_media:
+    type: media_thumbnail
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      image_style: media_thumbnail
+      image_link: ''
+    third_party_settings: {  }
+  field_teaser_text:
+    type: basic_string
+    weight: 0
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_channel: true
+  field_department: true
+  field_meta_tags: true
+  field_paragraphs: true
+  field_seo_title: true
+  field_subtitle: true
+  field_tags: true
+  field_teaser_media: true
+  langcode: true
+  links: true
+  shariff_field: true
