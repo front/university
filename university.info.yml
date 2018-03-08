@@ -40,6 +40,7 @@ dependencies:
   - university_event
   - university_page
   - university_study
+  - university_study_information
 
 themes:
   - university_theme
