@@ -1,0 +1,84 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.event.field_channel
+    - field.field.node.event.field_date_from
+    - field.field.node.event.field_date_to
+    - field.field.node.event.field_description
+    - field.field.node.event.field_event_type
+    - field.field.node.event.field_hero_media
+    - field.field.node.event.field_link
+    - field.field.node.event.field_location
+    - field.field.node.event.field_location_url
+    - node.type.event
+  module:
+    - datetime
+    - link
+    - user
+id: node.event.teaser
+targetEntityType: node
+bundle: event
+mode: teaser
+content:
+  field_date_from:
+    type: datetime_default
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+  field_date_to:
+    type: datetime_default
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+  field_link:
+    type: link
+    weight: 4
+    region: content
+    label: hidden
+    settings:
+      trim_length: null
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+  field_location:
+    type: string
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_location_url:
+    type: link_separate
+    weight: 3
+    region: content
+    label: hidden
+    settings:
+      trim_length: null
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+hidden:
+  field_channel: true
+  field_description: true
+  field_event_type: true
+  field_hero_media: true
+  field_teaser_media: true
+  field_teaser_text: true
+  langcode: true
+  links: true
+  shariff_field: true

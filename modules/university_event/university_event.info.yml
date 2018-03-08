@@ -1,0 +1,5 @@
+name: 'University Event'
+type: module
+description: 'Provides Event content type for University distribution.'
+core: 8.x
+package: University

@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_link
+    - node.type.event
+  module:
+    - link
+id: node.event.field_link
+field_name: field_link
+entity_type: node
+bundle: event
+label: Link
+description: 'Call-to-action, internal or external URL with additional information about this event. <em>Link text</em> is optional.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

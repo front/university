@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_from
+    - node.type.event
+  module:
+    - datetime
+id: node.event.field_date_from
+field_name: field_date_from
+entity_type: node
+bundle: event
+label: From
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime
