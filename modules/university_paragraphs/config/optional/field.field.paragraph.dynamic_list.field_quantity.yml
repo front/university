@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_quantity
+    - paragraphs.paragraphs_type.dynamic_list
+id: paragraph.dynamic_list.field_quantity
+field_name: field_quantity
+entity_type: paragraph
+bundle: dynamic_list
+label: Quantity
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 4
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

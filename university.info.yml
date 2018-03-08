@@ -34,6 +34,8 @@ dependencies:
   - serialization
   - thunder_fia
   - update
+  # university modules
+  - university_paragraphs
 
 themes:
   - university_theme

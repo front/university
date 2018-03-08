@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_set_align
+    - paragraphs.paragraphs_type.box
+  module:
+    - options
+id: paragraph.box.field_set_align
+field_name: field_set_align
+entity_type: paragraph
+bundle: box
+label: Align
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: right
+default_value_callback: ''
+settings: {  }
+field_type: list_string

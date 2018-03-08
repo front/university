@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.media_browser
+    - field.field.paragraph.media.field_media
+    - paragraphs.paragraphs_type.media
+  module:
+    - entity_browser
+id: paragraph.media.default
+targetEntityType: paragraph
+bundle: media
+mode: default
+content:
+  field_media:
+    type: entity_browser_entity_reference
+    weight: 0
+    settings:
+      entity_browser: media_browser
+      field_widget_display: inline_entity_form
+      field_widget_edit: false
+      field_widget_remove: true
+      open: true
+      field_widget_display_settings:
+        view_mode: thumbnail
+        form_mode: inline
+    third_party_settings: {  }
+    region: content
+  translation:
+    weight: 10
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

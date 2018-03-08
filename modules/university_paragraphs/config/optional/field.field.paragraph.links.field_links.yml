@@ -1,0 +1,47 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_links
+    - paragraphs.paragraphs_type.link
+    - paragraphs.paragraphs_type.links
+  module:
+    - entity_reference_revisions
+id: paragraph.links.field_links
+field_name: field_links
+entity_type: paragraph
+bundle: links
+label: Links
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      link: link
+    target_bundles_drag_drop:
+      links:
+        weight: 8
+        enabled: false
+      box:
+        weight: 9
+        enabled: false
+      gallery:
+        weight: 10
+        enabled: false
+      html:
+        weight: 11
+        enabled: false
+      link:
+        enabled: true
+        weight: 12
+      quote:
+        weight: 13
+        enabled: false
+      text:
+        weight: 14
+        enabled: false
+field_type: entity_reference_revisions

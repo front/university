@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_links_columns
+    - paragraphs.paragraphs_type.links
+  module:
+    - options
+id: paragraph.links.field_links_columns
+field_name: field_links_columns
+entity_type: paragraph
+bundle: links
+label: Columns
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 2
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

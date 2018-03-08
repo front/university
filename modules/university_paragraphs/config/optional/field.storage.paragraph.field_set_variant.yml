@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_set_variant
+field_name: field_set_variant
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: fact
+      label: Factbox
+    -
+      value: info
+      label: Infobox
+    -
+      value: note
+      label: Notebox
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

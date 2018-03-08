@@ -1,0 +1,47 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.html.field_footer
+    - field.field.paragraph.html.field_header
+    - field.field.paragraph.html.field_html
+    - field.field.paragraph.html.field_title
+    - paragraphs.paragraphs_type.html
+  module:
+    - text
+id: paragraph.html.preview
+targetEntityType: paragraph
+bundle: html
+mode: preview
+content:
+  field_footer:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_header:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_html:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

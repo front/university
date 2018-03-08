@@ -1,0 +1,116 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.dynamic_list.field_content_type
+    - field.field.paragraph.dynamic_list.field_footer
+    - field.field.paragraph.dynamic_list.field_header
+    - field.field.paragraph.dynamic_list.field_quantity
+    - field.field.paragraph.dynamic_list.field_row_bg
+    - field.field.paragraph.dynamic_list.field_row_columns
+    - field.field.paragraph.dynamic_list.field_row_space
+    - field.field.paragraph.dynamic_list.field_taxonomy
+    - field.field.paragraph.dynamic_list.field_title
+    - paragraphs.paragraphs_type.dynamic_list
+  module:
+    - allowed_formats
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_style:
+      children:
+        - field_row_bg
+        - field_row_columns
+        - field_row_space
+      parent_name: ''
+      weight: 20
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: false
+      label: Style
+id: paragraph.dynamic_list.default
+targetEntityType: paragraph
+bundle: dynamic_list
+mode: default
+content:
+  field_content_type:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_footer:
+    weight: 5
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings:
+      allowed_formats:
+        hide_help: '1'
+        hide_guidelines: '1'
+    type: text_textarea
+    region: content
+  field_header:
+    weight: 4
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings:
+      allowed_formats:
+        hide_help: '1'
+        hide_guidelines: '1'
+    type: text_textarea
+    region: content
+  field_quantity:
+    weight: 3
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_row_bg:
+    weight: 21
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_row_columns:
+    weight: 22
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_row_space:
+    weight: 23
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_taxonomy:
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete_tags
+    region: content
+  field_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  translation:
+    weight: 10
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

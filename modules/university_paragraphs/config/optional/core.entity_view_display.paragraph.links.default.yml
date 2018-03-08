@@ -1,0 +1,67 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.links.field_footer
+    - field.field.paragraph.links.field_header
+    - field.field.paragraph.links.field_links
+    - field.field.paragraph.links.field_links_variant
+    - field.field.paragraph.links.field_row_columns
+    - field.field.paragraph.links.field_title
+    - paragraphs.paragraphs_type.links
+  module:
+    - entity_reference_revisions
+    - options
+    - text
+id: paragraph.links.default
+targetEntityType: paragraph
+bundle: links
+mode: default
+content:
+  field_footer:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_header:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_links:
+    weight: 2
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_links_variant:
+    type: list_key
+    weight: 4
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_row_columns:
+    weight: 5
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_key
+    region: content
+  field_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  field_links_columns: true

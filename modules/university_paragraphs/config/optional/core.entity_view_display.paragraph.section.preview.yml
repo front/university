@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.section.field_text
+    - field.field.paragraph.section.field_title
+    - paragraphs.paragraphs_type.section
+  module:
+    - text
+id: paragraph.section.preview
+targetEntityType: paragraph
+bundle: section
+mode: preview
+content:
+  field_text:
+    weight: 1
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    type: text_trimmed
+    region: content
+  field_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

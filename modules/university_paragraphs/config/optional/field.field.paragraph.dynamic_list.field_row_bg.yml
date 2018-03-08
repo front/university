@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_row_bg
+    - paragraphs.paragraphs_type.dynamic_list
+  module:
+    - options
+id: paragraph.dynamic_list.field_row_bg
+field_name: field_row_bg
+entity_type: paragraph
+bundle: dynamic_list
+label: 'Background Color'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

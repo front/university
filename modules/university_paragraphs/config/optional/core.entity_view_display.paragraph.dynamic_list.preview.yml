@@ -1,0 +1,92 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.dynamic_list.field_content_type
+    - field.field.paragraph.dynamic_list.field_footer
+    - field.field.paragraph.dynamic_list.field_header
+    - field.field.paragraph.dynamic_list.field_quantity
+    - field.field.paragraph.dynamic_list.field_row_bg
+    - field.field.paragraph.dynamic_list.field_row_columns
+    - field.field.paragraph.dynamic_list.field_row_space
+    - field.field.paragraph.dynamic_list.field_taxonomy
+    - field.field.paragraph.dynamic_list.field_title
+    - paragraphs.paragraphs_type.dynamic_list
+  module:
+    - options
+    - text
+id: paragraph.dynamic_list.preview
+targetEntityType: paragraph
+bundle: dynamic_list
+mode: preview
+content:
+  field_content_type:
+    weight: 2
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_footer:
+    type: text_default
+    weight: 5
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_header:
+    type: text_default
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_quantity:
+    weight: 4
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_row_bg:
+    type: list_default
+    weight: 8
+    region: content
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+  field_row_columns:
+    type: list_default
+    weight: 6
+    region: content
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+  field_row_space:
+    type: list_default
+    weight: 7
+    region: content
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+  field_taxonomy:
+    weight: 3
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_title:
+    type: string
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    region: content
+hidden: {  }

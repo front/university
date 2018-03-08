@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_banner_overlay
+    - paragraphs.paragraphs_type.banner
+id: paragraph.banner.field_banner_overlay
+field_name: field_banner_overlay
+entity_type: paragraph
+bundle: banner
+label: 'Banner overlay'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: '1'
+  off_label: '0'
+field_type: boolean

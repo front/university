@@ -1,0 +1,67 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.columns.field_column_items
+    - field.field.paragraph.columns.field_row_bg
+    - field.field.paragraph.columns.field_row_columns
+    - field.field.paragraph.columns.field_row_space
+    - paragraphs.paragraphs_type.columns
+  module:
+    - field_group
+    - paragraphs
+third_party_settings:
+  field_group:
+    group_style:
+      children:
+        - field_row_space
+        - field_row_columns
+        - field_row_bg
+      parent_name: ''
+      weight: 1
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: false
+      label: Style
+id: paragraph.columns.default
+targetEntityType: paragraph
+bundle: columns
+mode: default
+content:
+  field_column_items:
+    type: entity_reference_paragraphs
+    weight: 0
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+    third_party_settings: {  }
+    region: content
+  field_row_bg:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_row_columns:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_row_space:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

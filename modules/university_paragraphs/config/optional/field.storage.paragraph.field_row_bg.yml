@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_row_bg
+field_name: field_row_bg
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: grey
+      label: Grey
+    -
+      value: grey-large-up
+      label: 'Grey (large screens only)'
+    -
+      value: turquoise
+      label: Turquoise
+    -
+      value: turquoise-light
+      label: 'Turquoise light'
+    -
+      value: turquoise-dark
+      label: 'Turquoise dark'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

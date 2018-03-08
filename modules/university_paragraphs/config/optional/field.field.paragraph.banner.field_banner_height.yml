@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_banner_height
+    - paragraphs.paragraphs_type.banner
+  module:
+    - options
+id: paragraph.banner.field_banner_height
+field_name: field_banner_height
+entity_type: paragraph
+bundle: banner
+label: 'Banner height'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: normal
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,62 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.banner.field_banner_height
+    - field.field.paragraph.banner.field_banner_overlay
+    - field.field.paragraph.banner.field_banner_variant
+    - field.field.paragraph.banner.field_media
+    - field.field.paragraph.banner.field_text
+    - field.field.paragraph.banner.field_title
+    - paragraphs.paragraphs_type.banner
+  module:
+    - options
+    - text
+id: paragraph.banner.preview
+targetEntityType: paragraph
+bundle: banner
+mode: preview
+content:
+  field_banner_height:
+    type: list_default
+    weight: 3
+    region: content
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+  field_banner_overlay:
+    type: boolean
+    weight: 4
+    region: content
+    label: inline
+    settings:
+      format: enabled-disabled
+      format_custom_true: ''
+      format_custom_false: ''
+    third_party_settings: {  }
+  field_banner_variant:
+    type: list_default
+    weight: 2
+    region: content
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+  field_media:
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: thumbnail
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_text:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden:
+  field_title: true

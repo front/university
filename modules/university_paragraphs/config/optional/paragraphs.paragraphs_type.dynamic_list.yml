@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: dynamic_list
+label: 'Dynamic List'
+behavior_plugins: {  }

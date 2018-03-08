@@ -1,0 +1,94 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_column_items
+    - paragraphs.paragraphs_type.accordion
+    - paragraphs.paragraphs_type.block
+    - paragraphs.paragraphs_type.box
+    - paragraphs.paragraphs_type.columns
+    - paragraphs.paragraphs_type.dynamic_list
+    - paragraphs.paragraphs_type.html
+    - paragraphs.paragraphs_type.links
+    - paragraphs.paragraphs_type.list
+    - paragraphs.paragraphs_type.text
+  module:
+    - entity_reference_revisions
+id: paragraph.columns.field_column_items
+field_name: field_column_items
+entity_type: paragraph
+bundle: columns
+label: Items
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      text: text
+      box: box
+      accordion: accordion
+      links: links
+      dynamic_list: dynamic_list
+      list: list
+      html: html
+      block: block
+    target_bundles_drag_drop:
+      text:
+        enabled: true
+        weight: -35
+      media:
+        weight: -34
+        enabled: false
+      gallery:
+        weight: -33
+        enabled: false
+      box:
+        enabled: true
+        weight: -32
+      accordion:
+        enabled: true
+        weight: -31
+      links:
+        enabled: true
+        weight: -30
+      columns:
+        weight: -29
+        enabled: false
+      banner:
+        weight: -28
+        enabled: false
+      dynamic_list:
+        enabled: true
+        weight: -27
+      list:
+        enabled: true
+        weight: -26
+      html:
+        enabled: true
+        weight: -25
+      instagram:
+        weight: -24
+        enabled: false
+      link:
+        weight: -23
+        enabled: false
+      list_item:
+        weight: -22
+        enabled: false
+      quote:
+        weight: -21
+        enabled: false
+      section:
+        weight: -20
+        enabled: false
+      twitter:
+        weight: -19
+        enabled: false
+      block:
+        enabled: true
+        weight: 19
+field_type: entity_reference_revisions
