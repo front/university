@@ -92,7 +92,7 @@ content:
   field_hero_media:
     weight: 2
     settings:
-      entity_browser: image_gallery_browser
+      entity_browser: image_browser
       field_widget_display: rendered_entity
       field_widget_edit: true
       field_widget_remove: true
