@@ -1,0 +1,7 @@
+university_error_pages.admin_config:
+  path: '/admin/config/system/error-pages'
+  defaults:
+    _form: '\Drupal\university_error_pages\Form\AdminConfig'
+    _title: 'AdminConfig'
+  requirements:
+    _permission: 'administer site configuration'

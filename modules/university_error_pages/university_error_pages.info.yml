@@ -1,0 +1,5 @@
+name: 'University Error Pages'
+type: module
+description: 'Provides error pages settings.'
+core: 8.x
+package: University
