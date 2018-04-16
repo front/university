@@ -36,15 +36,16 @@ class AdminConfig extends ConfigFormBase {
     ];
 
     $form['text'] = [
-      '#type' => 'textfield',
+      '#type' => 'text_format',
       '#title' => $this->t('Text'),
+      '#format' => 'full_html',
       '#default_value' => $config->get('text') ? $config->get('text') : 'Unfortunately, you don’t have permission to enter this area of the site.',
     ];
 
     $form['login_form'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Login Form'),
-      '#default_value' => $config->get('login_form') ? $config->get('login_form') : 1,
+      '#default_value' => $config->get('login_form') == 0 ? false : true,
     ];
 
     $form['actions'] = [
@@ -66,7 +67,7 @@ class AdminConfig extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('university_error_pages.admin_config')
       ->set('title', $form_state->getValue('title'))
-      ->set('text', $form_state->getValue('text'))
+      ->set('text', $form_state->getValue('text')['value'])
       ->set('login_form', $form_state->getValue('login_form'))
       ->save();
   }
