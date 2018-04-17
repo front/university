@@ -32,20 +32,20 @@ class AdminConfig extends ConfigFormBase {
     $form['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Title'),
-      '#default_value' => $config->get('title') ? $config->get('title') : '403 - Access denied',
+      '#default_value' => $this->t($config->get('title')),
     ];
 
     $form['text'] = [
       '#type' => 'text_format',
       '#title' => $this->t('Text'),
       '#format' => 'full_html',
-      '#default_value' => $config->get('text') ? $config->get('text') : 'Unfortunately, you don’t have permission to enter this area of the site.',
+      '#default_value' => $this->t($config->get('text')),
     ];
 
     $form['login_form'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Login Form'),
-      '#default_value' => $config->get('login_form') == 0 ? false : true,
+      '#default_value' => empty($config->get('login_form')) ? FALSE : TRUE,
     ];
 
     $form['actions'] = [
