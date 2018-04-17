@@ -4,6 +4,7 @@ projects[thunder][type] = profile
 projects[thunder][version] = 8.2.14
 projects[thunder][download][type] = git
 projects[thunder][download][branch] = 8.x-2.x
+projects[thunder][patch][] = https://www.drupal.org/files/issues/2018-04-17/thunder-drupal-org-make.patch
 
 
 projects[address][type] = module
