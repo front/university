@@ -33,6 +33,7 @@ class AdminConfig extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Title'),
       '#default_value' => $this->t($config->get('title')),
+      '#required' => true,
     ];
 
     $form['text'] = [
