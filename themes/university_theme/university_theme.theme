@@ -936,8 +936,6 @@ function university_theme_preprocess_breadcrumb(&$variables) {
 
     // Handle cache. Invalidate by url.
     $variables['#cache']['contexts'][] = 'url';
-    $variables['#cache']['tags'] = \Drupal::config('university_error_pages.admin_config')
-      ->getCacheTags();
   }
   else {
     $variables['breadcrumb'] = '';
