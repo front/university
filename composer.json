@@ -41,7 +41,6 @@
         }
     ],
     "require": {
-        "drupal/address": "~1.0",
         "drupal/allowed_formats": "1.x-dev",
         "drupal/better_exposed_filters": "^3.0",
         "drupal/chosen": "~2.2",

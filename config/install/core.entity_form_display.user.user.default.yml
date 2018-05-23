@@ -164,7 +164,6 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  field_address: true
   field_phone_mobile: true
   langcode: true
   path: true

@@ -23,7 +23,6 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
-  field_address: true
   field_cristin_id: true
   field_department: true
   field_description: true

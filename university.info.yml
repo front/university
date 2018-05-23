@@ -13,7 +13,6 @@ base profile:
 
 dependencies:
   - action
-  - address
   - allowed_formats
   - better_exposed_filters
   - chosen
