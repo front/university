@@ -8,6 +8,8 @@ projects[thunder][patch][] = https://www.drupal.org/files/issues/2018-04-17/thun
 
 projects[allowed_formats][type] = module
 projects[allowed_formats][version] = 1.1
+projects[better_exposed_filters][type] = module
+projects[better_exposed_filters][version] = 3.0
 projects[chosen][type] = module
 projects[chosen][version] = 2.5
 projects[embed][type] = module
