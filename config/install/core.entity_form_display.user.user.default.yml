@@ -2,7 +2,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.user.user.field_address
     - field.field.user.user.field_cristin_id
     - field.field.user.user.field_department
     - field.field.user.user.field_description
@@ -35,7 +34,6 @@ third_party_settings:
         - field_phone_office
         - field_twitter
         - field_linkedin
-        - field_address
         - field_phone_mobile
       parent_name: ''
       weight: 0
