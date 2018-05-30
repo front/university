@@ -4,7 +4,7 @@ projects[thunder][type] = profile
 projects[thunder][download][type] = git
 projects[thunder][download][branch] = 8.x-2.x
 projects[thunder][download][revision] = 6c3756b
-projects[thunder][patch][] = https://www.drupal.org/files/issues/2018-04-17/thunder-drupal-org-make.patch
+projects[thunder][patch][] = https://www.drupal.org/files/issues/2018-05-30/thunder-drupal-org-make_1.patch
 
 projects[allowed_formats][type] = module
 projects[allowed_formats][version] = 1.1
