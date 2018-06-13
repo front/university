@@ -263,14 +263,7 @@ function university_theme_preprocess_node(array &$variables) {
     if ($first_name || $last_name) {
       $author_name = $first_name . ' ' . $last_name;
 
-      $field_hidden_profile = $author->get('field_hidden_profile')->getValue();
-      if (!empty($field_hidden_profile[0])) {
-        $is_hidden_profile = $field_hidden_profile[0]['value'];
-      }
-      else {
-        $is_hidden_profile = FALSE;
-      }
-      if ($author->isActive() && !$is_hidden_profile) {
+      if ($author->isActive()) {
         $variables['author_name'] = Link::createFromRoute($author_name, 'entity.user.canonical', ['user' => $author->id()]);
       }
       else {
