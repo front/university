@@ -39,10 +39,10 @@ function university_theme_preprocess_html(array &$variables) {
     if ($variables['root_path'] == 'user') {
       $variables['attributes']['class'][] = 'template-employee';
     }
-    elseif ($variables['root_path'] == 'studium' || $variables['root_path'] == 'tilsette') {
+    elseif ($variables['root_path'] == 'studies' || $variables['root_path'] == 'employees') {
       $variables['attributes']['class'][] = 'template-study-list';
     }
-    elseif ($variables['root_path'] == 'sok') {
+    elseif ($variables['root_path'] == 'search') {
       $variables['attributes']['class'][] = 'template-search';
     }
   }
@@ -375,10 +375,10 @@ function university_theme_preprocess_node(array &$variables) {
   }
   elseif ($variables['node']->bundle() == 'study') {
     if ($variables['view_mode'] == 'full') {
-      _university_theme_add_study_information($variables);
-      _university_theme_add_study_plan($variables);
-      _university_theme_add_study_insights($variables);
-      _university_theme_add_study_cta($variables);
+//      _university_theme_add_study_information($variables);
+//      _university_theme_add_study_plan($variables);
+//      _university_theme_add_study_insights($variables);
+//      _university_theme_add_study_cta($variables);
     }
     else {
       // TODO: other view modes needs processing?
@@ -712,7 +712,7 @@ function university_theme_preprocess_paragraph(array &$variables) {
     }
   }
   elseif ($bundle == 'dynamic_list') {
-    $variables['content']['view'] = _university_theme_get_dynamic_list($content);
+//    $variables['content']['view'] = _university_theme_get_dynamic_list($content);
 
     if (!empty($content['field_content_type']['#items'])) {
       $variables['attributes']['class'][] = $content['field_content_type']['#items']->getString();
@@ -852,7 +852,7 @@ function university_theme_preprocess_breadcrumb(&$variables) {
 
           if (isset($term_view[0]['#options']['entity'])) {
             $term_id        = $term_view[0]['#options']['entity']->id();
-            $department     = '/tilsette?department[' . $term_id . ']=' . $term_id;
+            $department     = '/employees?department[' . $term_id . ']=' . $term_id;
             $department_url = Url::fromUserInput($department);
 
             $variables['breadcrumb'][] = Link::fromTextAndUrl($term_view[0]['#title'], $department_url);
@@ -890,34 +890,6 @@ function university_theme_preprocess_breadcrumb(&$variables) {
           && ($crumb['text'] == 'Node' || $crumb['text'] == 'Front')) {
         unset($variables['breadcrumb'][$key]);
       }
-    }
-
-    // Fix for missing Studietilbod breadcrumb
-    // todo: provide proper breadcrumb through custom module
-    $studietilbod_subs = [
-      '/vidare',
-      '/phd',
-      '/opptak',
-      '/utveksling',
-    ];
-
-    $is_studietilbod_sub         = (in_array($node_url, $studietilbod_subs, TRUE)) ? TRUE : FALSE;
-    $is_study_view               = ($route_name == 'view.study.page') ? TRUE : FALSE;
-    $is_emweb_study_courses_view = ($route_name == 'emweb_catalog.study_courses') ? TRUE : FALSE;
-    $is_emweb_study_plans_view   = ($route_name == 'emweb_catalog.study_plans') ? TRUE : FALSE;
-
-    if ($is_studietilbod_sub || $is_study_view || $is_emweb_study_courses_view || $is_emweb_study_plans_view) {
-      $studietilbod_bc = [
-        'text' => 'Studietilbod',
-        'url'  => '/studietilbod',
-      ];
-      array_splice($variables['breadcrumb'], 1, 0, [$studietilbod_bc]);
-    }
-
-    // Fix for the last breadcrumb title on study view
-    // todo: provide proper breadcrumb through custom module
-    if ($route_name == 'view.study.page') {
-      $title = 'Studium';
     }
 
     if (empty($title)) {
@@ -1193,3 +1165,4 @@ function university_theme_preprocess_facets_summary_item_list(&$variables) {
     }
   }
 }
+
