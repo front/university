@@ -1,0 +1,65 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+  module:
+    - ckeditor
+_core:
+  default_config_hash: nCzo0ryuI2_98C2LWicg4EYnvD_KDw8Lf_6K7VOPeBw
+format: full_html
+editor: ckeditor
+settings:
+  toolbar:
+    rows:
+      -
+        -
+          name: Formatting
+          items:
+            - Bold
+            - Italic
+            - Strike
+            - Superscript
+            - Subscript
+            - '-'
+            - RemoveFormat
+        -
+          name: Linking
+          items:
+            - DrupalLink
+            - DrupalUnlink
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+        -
+          name: Media
+          items:
+            - Blockquote
+            - DrupalImage
+            - Table
+            - HorizontalRule
+            - document
+        -
+          name: 'HTML Formatting'
+          items:
+            - Format
+            - Styles
+            - Source
+  plugins:
+    drupallink:
+      linkit_enabled: true
+      linkit_profile: basic_html
+    language:
+      language_list: un
+    stylescombo:
+      styles: "p.intro|Intro paragraph\r\nul.list-icons|Icons list\r\na.icon-envelope|Icon: envelope\r\na.icon-phone|Icon: phone"
+image_upload:
+  status: true
+  scheme: public
+  directory: inline-images
+  max_size: ''
+  max_dimensions:
+    width: null
+    height: null

@@ -1,0 +1,61 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+  module:
+    - ckeditor
+_core:
+  default_config_hash: I8GHTzNXDDVPdAAELDy-9vnxNFtxctYfdXN7_Wmhv_4
+format: basic_html
+editor: ckeditor
+settings:
+  toolbar:
+    rows:
+      -
+        -
+          name: Formatting
+          items:
+            - Bold
+            - Italic
+        -
+          name: Linking
+          items:
+            - DrupalLink
+            - DrupalUnlink
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+        -
+          name: Media
+          items:
+            - Blockquote
+            - DrupalImage
+            - document
+        -
+          name: 'Block Formatting'
+          items:
+            - Format
+            - Styles
+        -
+          name: Tools
+          items:
+            - Source
+  plugins:
+    drupallink:
+      linkit_enabled: true
+      linkit_profile: basic_html
+    language:
+      language_list: un
+    stylescombo:
+      styles: "p.button-group|Button group\r\na.btn|Button: normal\r\na.btn-text|Button: text\r\na.btn-primary|Button: primary\r\na.btn-secondary|Button: secondary\r\na.btn.btn-outline|Button: outline\r\na.btn.btn-invert|Button: invert\r\na.btn.btn-invert.btn-outline|Button: invert outline\r\na.btn-text.btn-outline|Button: text outline\r\na.btn-text.btn-invert|Button: text invert\r\na.btn-text.btn-invert.btn-outline|Button: text invert outline"
+image_upload:
+  status: true
+  scheme: public
+  directory: inline-images
+  max_size: ''
+  max_dimensions:
+    width: null
+    height: null

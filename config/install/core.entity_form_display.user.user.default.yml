@@ -2,7 +2,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.user.user.field_cristin_id
     - field.field.user.user.field_department
     - field.field.user.user.field_description
     - field.field.user.user.field_first_name
@@ -28,7 +27,6 @@ third_party_settings:
         - field_first_name
         - field_last_name
         - field_position
-        - field_cristin_id
         - field_department
         - field_office_number
         - field_phone_office
@@ -79,13 +77,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_cristin_id:
-    weight: 6
-    settings:
-      placeholder: 'Person ID on Cristin'
-    third_party_settings: {  }
-    type: number
-    region: content
   field_department:
     weight: 7
     settings: {  }

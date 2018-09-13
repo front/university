@@ -36,11 +36,6 @@ dependencies:
   - update
   # university modules
   - university_paragraphs
-  ##- university_article
-  - university_event
-  ##- university_page
-  - university_study
-  - university_study_information
 
 themes:
   - university_theme
