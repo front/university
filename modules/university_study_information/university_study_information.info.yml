@@ -1,5 +1,0 @@
-name: 'University Study Information'
-type: module
-description: 'Provides Study Information content type for University distribution.'
-core: 8.x
-package: University
