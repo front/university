@@ -1,17 +1,16 @@
 <?php
 
 /**
-* @file
-* This is the module to create error pages.
-*/
-
-/**
- * Implements hook_preprocess_breadcrumb().
+ * Implements hook_theme().
  */
-function university_error_pages_preprocess_breadcrumb(&$variables) {
-  if (Drupal::service('current_route_match')
-      ->getRouteName() == 'university_error_pages.index') {
-    $variables['#cache']['tags'][] = \Drupal::config('university_error_pages.admin_config')
-      ->getCacheTags()[0];
-  }
+function university_error_pages_theme() {
+  return [
+    'error_page_403' => [
+      'variables' => [
+        'error_page_content' => t('An error occured.'),
+        'login_form' => NULL,
+      ],
+    ],
+  ];
 }
+

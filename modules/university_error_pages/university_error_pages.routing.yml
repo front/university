@@ -6,14 +6,13 @@ university_error_pages.admin_config:
   requirements:
     _permission: 'administer site configuration'
 
-university_error_pages.index:
+university_error_pages.error403:
   path: '/403'
   defaults:
-    _controller: '\Drupal\university_error_pages\Controller\UniversityErrorPagesController::index'
+    _controller: '\Drupal\university_error_pages\Controller\ErrorPageController::error403'
     _title: '403'
-    _title_callback: '\Drupal\university_error_pages\Controller\UniversityErrorPagesController::title'
+    _title_callback: '\Drupal\university_error_pages\Controller\ErrorPageController::title403'
   requirements:
-    _permission: 'access content'
+    _access: 'TRUE'
   options:
     no_cache: 'TRUE'
-

@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a 403 page
+ *
+ * Available variables:
+ * - error_page_content: configured page content to show
+ * - login_form: a built block with login form
+ *
+ * @ingroup themeable
+ */
+#}
+
+<div class="error-403">
+  <div class="error-message">{{ error_page_content }}</span>
+  {% if login_form %}
+    <div class="error-login-form">{{ login_form }} </span>
+  {% endif %}
+</div>
+
