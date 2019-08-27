@@ -23,6 +23,17 @@ class AdminConfig extends ConfigFormBase {
     ];
   }
 
+  protected function getSystemBlocks() {
+    $blocks = Drupal::service('plugin.manager.block')
+      ->getDefinitions();
+    $ret = [];
+    foreach ($blocks as $i => $block) {
+      $ret[$i] = $block['admin_label'] ?? $i;
+    }
+    natsort($ret);
+    return $ret;
+  }
+
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('university_error_pages.admin_config');
 
@@ -38,8 +49,9 @@ class AdminConfig extends ConfigFormBase {
     ];
 
     $form['login_form_block'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Name of the login form block'),
+      '#type' => 'select',
+      '#title' => $this->t('The login form block'),
+      '#options' => $this->getSystemBlocks(),
       '#default_value' => $this->t($config->get('login_form_block')),
       '#required' => true,
     ];
