@@ -1,6 +1,19 @@
 <?php
 
+use Drupal\Component\Plugin\Exception\PluginException;
+use Drupal\node\NodeTypeInterface;
+
 function university_page_module_preinstall($module) {
-  \Drupal::entityManager()->getStorage('node_type')->load('page')->delete();
+  $bundle = 'page';
+  try {
+    $nodeTypeStorage = \Drupal::entityTypeManager()->getStorage('node_type');
+    $nodeType = $nodeTypeStorage->load($bundle);
+    if ($nodeType instanceof NodeTypeInterface) {
+      $nodeType->delete();
+    }
+  } catch (PluginException $exception) {
+    \Drupal::logger('university_page')
+      ->alert(t('An error occured when trying to delete @bundle content type.', ['@bundle' => $bundle]));
+  }
 }
 

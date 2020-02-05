@@ -8,8 +8,7 @@ distribution:
   install:
     theme: university_admin
 
-base profile:
-  name: thunder
+base profile: thunder
 
 dependencies:
   - action
@@ -32,7 +31,9 @@ dependencies:
   - media_entity_document
   - rest
   - serialization
+  - thunder
   - thunder_fia
+  - thunder_updater
   - update
   # university modules
   - university_paragraphs

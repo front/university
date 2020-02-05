@@ -1,8 +1,6 @@
 langcode: en
 status: false
 dependencies:
-  module:
-    - thunder
   theme:
     - university_theme
 id: university_theme_powered
